@@ -8,9 +8,9 @@ namespace Tetrix
 {
     public class Shape : ShapeIF
     {
-        private BlockIF[][] blocks;
+        private BlockIF[,] blocks;
 
-        public Shape(BlockIF[][] blocks)
+        public Shape(BlockIF[,] blocks)
         {
             this.blocks = blocks;
         }
@@ -20,7 +20,7 @@ namespace Tetrix
             throw new NotImplementedException();
         }
 
-        BlockIF[][] ShapeIF.getBlocks()
+        BlockIF[,] ShapeIF.getBlocks()
         {
             throw new NotImplementedException();
         }

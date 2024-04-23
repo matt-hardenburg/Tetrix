@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Tetrix
 {
-    public interface ShapeIF : GameElementIF
+    public interface ShapeBuilderIF
     {
-        BlockIF[,] getBlocks();
+        ShapeIF getShape();
+        void generateShape();
     }
 }
