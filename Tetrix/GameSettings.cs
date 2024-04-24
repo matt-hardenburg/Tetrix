@@ -8,11 +8,12 @@ namespace Tetrix
 {
     public class GameSettings : ReadOnlyGameSettingsIF
     {
+        //Change to more uints?
         private int minFallingSpeed;
         private int maxFallingSpeed;
         private int rampUp;
         private int maxStackHeight;
-        private int pointMultiplier;
+        private double pointMultiplier;
         private ShapeBuilderIF shapeBuilder;
 
         public GameSettings()
@@ -40,7 +41,7 @@ namespace Tetrix
             return minFallingSpeed;
         }
 
-        public int getPointMultiplier()
+        public double getPointMultiplier()
         {
             return pointMultiplier;
         }
@@ -80,7 +81,7 @@ namespace Tetrix
             this.shapeBuilder = shapeBuilder;
         }
 
-        public void setPointMultiplier(int pointMultiplier)
+        public void setPointMultiplier(double pointMultiplier)
         {
             this.pointMultiplier = pointMultiplier;
         }

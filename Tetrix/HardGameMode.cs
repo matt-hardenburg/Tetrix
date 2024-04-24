@@ -17,7 +17,7 @@ namespace Tetrix
             GameSettings gameSettings = new GameSettings();
 
             gameSettings.setMinFallingSpeed(3);
-            gameSettings.setMinFallingSpeed(1);
+            gameSettings.setMaxFallingSpeed(1);
             gameSettings.setMaxStackHeight(10);
             gameSettings.setRampUp(15);
             gameSettings.setPointMultiplier(2);

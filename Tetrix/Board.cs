@@ -12,7 +12,7 @@ namespace Tetrix
         private BlockIF[,] blockGrid;
         private ShapeIF currentShape;
         private ObservableIF observerManager;
-        private Object boardLock;
+        private Object boardLock; //Have to add synchronization for board and shape
         public enum Events : int
         {
             LineCleared = 1,

@@ -51,7 +51,10 @@ namespace Tetrix
 
         public void draw()
         {
-            throw new NotImplementedException();
+            foreach(GameElementIF gameElement in gameComponents)
+            {
+                gameElement.draw();
+            }
         }
 
         public List<GameElementIF> getGameComponents()
@@ -85,6 +88,11 @@ namespace Tetrix
                     }
                     break;
             }
+        }
+
+        public ReadOnlyGameSettingsIF getGameSettings()
+        {
+            return gameSettings;
         }
     }
 }

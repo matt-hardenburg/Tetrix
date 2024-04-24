@@ -24,7 +24,7 @@ namespace Tetrix
 
         public void addScore()
         {
-            Score score = new Score();
+            Score score = new Score(game.getGameSettings());
             game.getGameComponents().Add(score);
             foreach (ObservableIF observableComponent in game.getGameComponents())
             {

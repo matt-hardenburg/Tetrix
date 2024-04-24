@@ -9,6 +9,13 @@ namespace Tetrix
     public class Score : GameElementIF, ObserverIF
     {
         private uint currentScore;
+        private ReadOnlyGameSettingsIF gameSettings;
+
+        public Score(ReadOnlyGameSettingsIF gameSettings)
+        {
+            currentScore = 0;
+            this.gameSettings = gameSettings;
+        }
 
         public void draw()
         {
@@ -30,7 +37,7 @@ namespace Tetrix
             switch (eventNum)
             {
                 case (int)Board.Events.LineCleared:
-                    currentScore += 100;
+                    currentScore += (uint) (100 * gameSettings.getPointMultiplier());
                     break;
             }
         }
