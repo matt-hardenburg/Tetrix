@@ -13,12 +13,12 @@ namespace Tetrix
         private ShapeIF currentShape;
         private ObservableIF observerManager;
         private Object boardLock;
-        private enum Events : int
+        public enum Events : int
         {
             LineCleared = 1,
             PieceStopped = 2,
             TopOfScreen = 3
-        }
+        } //Fix having to cast to int
 
         public Board(int gridHeight, int gridWidth)
         {
@@ -118,6 +118,10 @@ namespace Tetrix
                             }
                         }
                     }
+                }
+                else
+                {
+                    observerManager.notifyObservers((int)Events.PieceStopped);
                 }
             }
             else if (direction.Equals("left"))
@@ -236,6 +240,7 @@ namespace Tetrix
                             }
                         }
                     }
+                    observerManager.notifyObservers((int)Events.LineCleared);
                 }
             }
         }
