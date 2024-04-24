@@ -8,7 +8,7 @@ namespace Tetrix
 {
     public class NullBlock : BlockTypeIF
     {
-        void BlockTypeIF.draw()
+        public void draw()
         {
             throw new NotImplementedException();
         }

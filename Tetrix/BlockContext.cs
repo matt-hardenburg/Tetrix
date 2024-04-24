@@ -29,22 +29,22 @@ namespace Tetrix
             throw new NotImplementedException();
         }
 
-        int BlockIF.getGridLocationX()
+        public int getGridLocationX()
         {
             return gridLocationX;
         }
 
-        int BlockIF.getGridLocationY()
+        public int getGridLocationY()
         {
             return gridLocationY;
         }
 
-        void BlockIF.setGridLocationX(int x)
+        public void setGridLocationX(int x)
         {
             this.gridLocationX = x;
         }
 
-        void BlockIF.setGridLocationY(int y)
+        public void setGridLocationY(int y)
         {
             this.gridLocationY = y;
         }

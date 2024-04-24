@@ -10,7 +10,7 @@ namespace Tetrix
     {
         private uint currentScore;
 
-        void GameElementIF.draw()
+        public void draw()
         {
             throw new NotImplementedException();
         }
@@ -25,7 +25,7 @@ namespace Tetrix
             this.currentScore = currentScore;
         }
 
-        void ObserverIF.notify(int eventNum)
+        public void notify(int eventNum)
         {
             switch (eventNum)
             {

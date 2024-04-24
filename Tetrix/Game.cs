@@ -13,9 +13,11 @@ namespace Tetrix
         private ReadOnlyGameSettingsIF gameSettings;
         private List<Thread> threads;
 
+        //Lots of casting between game components, should eliminate
+
         public Game(string gameMode)
         {
-            Type type = Type.GetType("Tetrix." + gameMode);
+            Type type = Type.GetType("Tetrix." + gameMode + "GameMode");
             object obj = Activator.CreateInstance(type, this);
             if (obj != null && obj is GameModeAC) {
                 this.gameMode = (GameModeAC) obj;
@@ -47,7 +49,7 @@ namespace Tetrix
             }
         }
 
-        void GameElementIF.draw()
+        public void draw()
         {
             throw new NotImplementedException();
         }
@@ -62,12 +64,12 @@ namespace Tetrix
             return threads;
         }
 
-        void GameEnvironmentIF.setGameSettings(GameSettings gameSettings)
+        public void setGameSettings(GameSettings gameSettings)
         {
             this.gameSettings = gameSettings;
         }
 
-        void ObserverIF.notify(int eventNum)
+        public void notify(int eventNum)
         {
             switch (eventNum)
             {
@@ -75,14 +77,11 @@ namespace Tetrix
                     this.exit();
                     break;
                 case (int)Board.Events.PieceStopped:
-                    foreach (GameElementIF gameElement in gameComponents)
+                    foreach (Board board in gameComponents)
                     {
-                        if (gameElement is Board)
-                        {
-                            ShapeBuilderIF shapeBuilder = gameSettings.getShapeBuilder();
-                            shapeBuilder.generateShape();
-                            ((Board)gameElement).addShapeToBoard(shapeBuilder.getShape());
-                        }
+                        ShapeBuilderIF shapeBuilder = gameSettings.getShapeBuilder();
+                        shapeBuilder.generateShape();
+                        board.addShapeToBoard(shapeBuilder.getShape());
                     }
                     break;
             }

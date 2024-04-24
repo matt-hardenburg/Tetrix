@@ -70,7 +70,7 @@ namespace Tetrix
                     }
                     else
                     {
-                        observerManager.notifyObservers((int)Events.TopOfScreen);
+                        this.notifyObservers((int)Events.TopOfScreen);
                         break;
                     }
                 }
@@ -121,7 +121,7 @@ namespace Tetrix
                 }
                 else
                 {
-                    observerManager.notifyObservers((int)Events.PieceStopped);
+                    this.notifyObservers((int)Events.PieceStopped);
                 }
             }
             else if (direction.Equals("left"))
@@ -240,7 +240,7 @@ namespace Tetrix
                             }
                         }
                     }
-                    observerManager.notifyObservers((int)Events.LineCleared);
+                    this.notifyObservers((int)Events.LineCleared);
                 }
             }
         }
@@ -252,7 +252,7 @@ namespace Tetrix
                 BlockIF block = blockGrid[0, i];
                 if (!(block is NullBlock))
                 {
-                    observerManager.notifyObservers((int)Events.TopOfScreen);
+                    this.notifyObservers((int)Events.TopOfScreen);
                     break;
                 }
             }
@@ -271,17 +271,17 @@ namespace Tetrix
             return false;
         }
 
-        void ObservableIF.addObserver(ObserverIF observer)
+        public void addObserver(ObserverIF observer)
         {
             observerManager.addObserver(observer);
         }
 
-        void ObservableIF.removeObserver(ObserverIF observer)
+        public void removeObserver(ObserverIF observer)
         {
             observerManager.removeObserver(observer);
         }
 
-        void ObservableIF.notifyObservers(int eventNum)
+        public void notifyObservers(int eventNum)
         {
             observerManager.notifyObservers(eventNum);
         }

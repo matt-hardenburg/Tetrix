@@ -12,7 +12,7 @@ namespace Tetrix
 
         public ColoredBlock(Color color) { this.color = color; }
 
-        void BlockTypeIF.draw()
+        public void draw()
         {
             throw new NotImplementedException();
         }

@@ -10,19 +10,19 @@ namespace Tetrix
     {
         private List<ObserverIF> observers = new List<ObserverIF>();
 
-        void ObservableIF.addObserver(ObserverIF observer)
+        public void addObserver(ObserverIF observer)
         {
             observers.Add(observer);
         }
 
-        void ObservableIF.notifyObservers(int eventNum)
+        public void notifyObservers(int eventNum)
         {
             foreach (ObserverIF observer in observers) {
                 observer.notify(eventNum);
             }
         }
 
-        void ObservableIF.removeObserver(ObserverIF observer)
+        public void removeObserver(ObserverIF observer)
         {
             observers.Remove(observer);
         }

@@ -20,7 +20,7 @@ namespace Tetrix
             this.currentTime = currentTime;
         }
 
-        void GameElementIF.draw()
+        public void draw()
         {
             throw new NotImplementedException();
         }

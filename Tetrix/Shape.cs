@@ -15,12 +15,12 @@ namespace Tetrix
             this.blocks = blocks;
         }
 
-        void GameElementIF.draw()
+        public void draw()
         {
             throw new NotImplementedException();
         }
 
-        BlockIF[,] ShapeIF.getBlocks()
+        public BlockIF[,] getBlocks()
         {
             throw new NotImplementedException();
         }

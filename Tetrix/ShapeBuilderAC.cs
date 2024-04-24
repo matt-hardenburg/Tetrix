@@ -14,13 +14,13 @@ namespace Tetrix
 
         protected abstract string generateColor();
 
-        void ShapeBuilderIF.generateShape()
+        public void generateShape()
         {
             string color = generateColor();
             shape = new Shape(generateStructure(color));
         }
 
-        ShapeIF ShapeBuilderIF.getShape()
+        public ShapeIF getShape()
         {
             return shape;
         }

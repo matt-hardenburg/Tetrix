@@ -25,32 +25,32 @@ namespace Tetrix
             shapeBuilder = new ShapeBuilder();
         }
 
-        int ReadOnlyGameSettingsIF.getMaxFallingSpeed()
+        public int getMaxFallingSpeed()
         {
             return maxFallingSpeed;
         }
 
-        int ReadOnlyGameSettingsIF.getMaxStackHeight()
+        public int getMaxStackHeight()
         {
             return maxStackHeight;
         }
 
-        int ReadOnlyGameSettingsIF.getMinFallingSpeed()
+        public int getMinFallingSpeed()
         {
             return minFallingSpeed;
         }
 
-        int ReadOnlyGameSettingsIF.getPointMultiplier()
+        public int getPointMultiplier()
         {
             return pointMultiplier;
         }
 
-        int ReadOnlyGameSettingsIF.getRampUp()
+        public int getRampUp()
         {
             return rampUp;
         }
 
-        ShapeBuilderIF ReadOnlyGameSettingsIF.getShapeBuilder()
+        public ShapeBuilderIF getShapeBuilder()
         {
             return shapeBuilder;
         }
