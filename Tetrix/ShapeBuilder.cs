@@ -36,19 +36,28 @@ namespace Tetrix
         protected override BlockIF[,] generateStructure(string color)
         {
             BlockIF[,] blocks = new BlockIF[4,2];
+
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    blocks[i, j] = new BlockContext(-1, -1, "null");
+                }
+            }
+
             Random rand = new Random();
             int numOfBlocks = rand.Next(1, 8);
             int row = rand.Next(0, 3);
             int col = rand.Next(0, 1);
             for (int num = 1; num <= numOfBlocks; num++)
             {
-                blocks[row, col] = new BlockContext(-1, -1, color);
-                int nextRow = row;
+                blocks[row, col] = new BlockContext(col, row, color);
+                int nextRow;
                 do
                 {
                     nextRow = rand.Next(0, 3);
                 } while (!(nextRow  >= row - 1) && !(nextRow <= row + 1));
-                int nextCol = col;
+                int nextCol;
                 do
                 {
                     nextCol = rand.Next(0, 1);

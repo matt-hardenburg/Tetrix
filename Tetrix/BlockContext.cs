@@ -38,5 +38,15 @@ namespace Tetrix
         {
             return gridLocationY;
         }
+
+        void BlockIF.setGridLocationX(int x)
+        {
+            this.gridLocationX = x;
+        }
+
+        void BlockIF.setGridLocationY(int y)
+        {
+            this.gridLocationY = y;
+        }
     }
 }

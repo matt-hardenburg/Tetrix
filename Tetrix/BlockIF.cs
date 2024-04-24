@@ -10,5 +10,7 @@ namespace Tetrix
     {
         int getGridLocationX();
         int getGridLocationY();
+        void setGridLocationX(int x);
+        void setGridLocationY(int y);
     }
 }
