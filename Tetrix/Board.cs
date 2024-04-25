@@ -67,7 +67,7 @@
                         }
                         else
                         {
-                            this.notifyObservers((int)Events.TopOfScreen);
+                            this.notifyObservers(Events.TopOfScreen);
                             break;
                         }
                     }
@@ -121,7 +121,7 @@
                     }
                     else
                     {
-                        this.notifyObservers((int)Events.PieceStopped);
+                        this.notifyObservers(Events.PieceStopped);
                     }
                 }
                 else if (direction.Equals("left"))
@@ -243,7 +243,7 @@
                                 }
                             }
                         }
-                        this.notifyObservers((int)Events.LineCleared);
+                        this.notifyObservers(Events.LineCleared);
                     }
                 }
             }
@@ -257,7 +257,7 @@
                     BlockIF block = blockGrid[0, i];
                     if (!(block is NullBlock))
                     {
-                        this.notifyObservers((int)Events.TopOfScreen);
+                        this.notifyObservers(Events.TopOfScreen);
                         break;
                     }
                 }
@@ -287,9 +287,9 @@
             observerManager.removeObserver(observer);
         }
 
-        public void notifyObservers(int eventNum)
+        public void notifyObservers(Board.Events _event)
         {
-            observerManager.notifyObservers(eventNum);
+            observerManager.notifyObservers(_event);
         }
     }
 }

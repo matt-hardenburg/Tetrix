@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tetrix
+﻿namespace Tetrix
 {
     public class Score : GameElementIF, ObserverIF
     {
@@ -32,11 +26,11 @@ namespace Tetrix
             this.currentScore = currentScore;
         }
 
-        public void notify(int eventNum)
+        public void notify(Board.Events _event)
         {
-            switch (eventNum)
+            switch (_event)
             {
-                case (int)Board.Events.LineCleared:
+                case Board.Events.LineCleared:
                     currentScore += (uint) (100 * gameSettings.getPointMultiplier());
                     break;
             }
