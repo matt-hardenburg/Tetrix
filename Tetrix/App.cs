@@ -12,7 +12,7 @@ namespace Tetrix
             try
             {
                 //Change to relative path
-                StreamReader scoreReader = new StreamReader("Data/modes.txt");
+                StreamReader scoreReader = new StreamReader("Data\\modes.txt");
                 string mode;
                 while ((mode = scoreReader.ReadLine()) != null)
                 {
@@ -37,7 +37,7 @@ namespace Tetrix
             try
             {
                 //Change to relative path
-                StreamReader scoreReader = new StreamReader("Data/highscores.txt");
+                StreamReader scoreReader = new StreamReader("Data\\highscores.txt");
                 string score;
                 this.SuspendLayout();
                 mainMenuPanel.Visible = false;
