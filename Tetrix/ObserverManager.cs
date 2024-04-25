@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tetrix
+﻿namespace Tetrix
 {
     public class ObserverManager : ObservableIF
     {
@@ -15,10 +9,10 @@ namespace Tetrix
             observers.Add(observer);
         }
 
-        public void notifyObservers(int eventNum)
+        public void notifyObservers(Board.Events _event)
         {
             foreach (ObserverIF observer in observers) {
-                observer.notify(eventNum);
+                observer.notify(_event);
             }
         }
 

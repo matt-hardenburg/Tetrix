@@ -1,23 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tetrix
+﻿namespace Tetrix
 {
     public class Board : GameElementIF, ObservableIF
     {
         private BlockIF[,] blockGrid;
         private ShapeIF currentShape;
         private ObservableIF observerManager;
+        
         public enum Events : int
         {
             LineCleared = 1,
             PieceStopped = 2,
             TopOfScreen = 3
-        } //Fix having to cast to int
+        }
 
         public Board(int gridHeight, int gridWidth)
         {
