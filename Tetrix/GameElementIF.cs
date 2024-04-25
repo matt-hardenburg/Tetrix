@@ -8,6 +8,6 @@ namespace Tetrix
 {
     public interface GameElementIF
     {
-        void draw();
+        void draw(Graphics graphics, int startX, int startY);
     }
 }

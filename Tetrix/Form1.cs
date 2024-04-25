@@ -45,7 +45,7 @@ namespace Tetrix
                 highScoresLabel.Text = "";
                 while ((score = scoreReader.ReadLine()) != null && scoreCounter <= 5)
                 {
-                    highScoresLabel.Text += scoreCounter + ". " + score;
+                    highScoresLabel.Text += scoreCounter + ". " + score + "\n";
                     scoreCounter++;
                 }
             }
@@ -72,6 +72,13 @@ namespace Tetrix
                 currentMode = "Normal";
             Game game = gameDirector.build(currentMode);
             game.start();
+            BufferedGraphicsContext currentContext;
+            BufferedGraphics myBuffer;
+            // Gets a reference to the current BufferedGraphicsContext
+            currentContext = BufferedGraphicsManager.Current;
+            // Creates a BufferedGraphics instance associated with Form1, and with
+            // dimensions the same size as the drawing surface of Form1.
+            myBuffer = currentContext.Allocate(this.CreateGraphics(), this.DisplayRectangle);
         }
     }
 }

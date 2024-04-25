@@ -37,8 +37,7 @@ namespace Tetrix
             }
         }
 
-        //Cant remember why we had this
-        //Write highscore
+        //Write highscore and display 
         protected override void shutDown()
         {
             base.shutDown();

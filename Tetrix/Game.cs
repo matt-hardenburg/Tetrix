@@ -72,7 +72,7 @@ namespace Tetrix
 
         public void draw()
         {
-            foreach(GameElementIF gameElement in gameComponents)
+            foreach (GameElementIF gameElement in gameComponents)
             {
                 gameElement.draw();
             }

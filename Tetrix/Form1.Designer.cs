@@ -101,16 +101,6 @@
             titleLabel.TabIndex = 0;
             titleLabel.Text = "Tetrix";
             // 
-            // highScorePanel
-            // 
-            highScorePanel.Controls.Add(highScoreReturnBtn);
-            highScorePanel.Controls.Add(highScoresLabel);
-            highScorePanel.Controls.Add(highScoreTitle);
-            highScorePanel.Location = new Point(0, 0);
-            highScorePanel.Name = "highScorePanel";
-            highScorePanel.Size = new Size(682, 422);
-            highScorePanel.TabIndex = 6;
-            // 
             // highScoreReturnBtn
             // 
             highScoreReturnBtn.Location = new Point(301, 265);
@@ -138,11 +128,22 @@
             highScoreTitle.TabIndex = 0;
             highScoreTitle.Text = "High Scores";
             // 
+            // highScorePanel
+            // 
+            highScorePanel.Controls.Add(highScoreReturnBtn);
+            highScorePanel.Controls.Add(highScoresLabel);
+            highScorePanel.Controls.Add(highScoreTitle);
+            highScorePanel.Location = new Point(0, 0);
+            highScorePanel.Name = "highScorePanel";
+            highScorePanel.Size = new Size(682, 422);
+            highScorePanel.TabIndex = 1;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(highScorePanel);
             Controls.Add(mainMenuPanel);
             Name = "Form1";
             Text = "Form1";
@@ -161,9 +162,9 @@
         private Button highScoreBtn;
         private Button startGameBtn;
         private ComboBox changeModeBox;
-        private Panel highScorePanel;
         private Button highScoreReturnBtn;
         private Label highScoresLabel;
         private Label highScoreTitle;
+        private Panel highScorePanel;
     }
 }
