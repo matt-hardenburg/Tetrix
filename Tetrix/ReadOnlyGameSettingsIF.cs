@@ -13,6 +13,6 @@ namespace Tetrix
         int getMaxFallingSpeed();
         int getRampUp();
         int getMaxStackHeight();
-        int getPointMultiplier();
+        double getPointMultiplier();
     }
 }

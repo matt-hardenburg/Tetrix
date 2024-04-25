@@ -28,13 +28,34 @@ namespace Tetrix
             }
 
             gameComponents = new List<GameElementIF>();
+            gameComponents.Add(this);
             gameSettings = new GameSettings();
             threads = new List<Thread>();
         }
 
         public void start()
         {
-            foreach (Thread thread in threads)
+            foreach (GameElementIF gameComponent in  gameComponents)
+            {
+                if (gameComponent is Board)
+                {
+                    Thread thread = new Thread(new InputThread((Board)gameComponent).run);
+                    threads.Add(thread);
+                    thread = new Thread(new GameThread(this.getGameSettings(), (Board)gameComponent).run);
+                    threads.Add(thread);
+                }
+                else if (gameComponent is Timer)
+                {
+                    Thread thread = new Thread(new TimerThread((Timer) gameComponent).run);
+                    threads.Add(thread);
+                }
+                else if (gameComponent is Game)
+                {
+                    Thread thread = new Thread(new GraphicsThread((Game)gameComponent).run);
+                    threads.Add(thread);
+                }
+            }
+            foreach (Thread thread in threads)  
             {
                 thread.Start();
             }

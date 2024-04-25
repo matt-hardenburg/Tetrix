@@ -38,6 +38,7 @@ namespace Tetrix
         }
 
         //Cant remember why we had this
+        //Write highscore
         protected override void shutDown()
         {
             base.shutDown();

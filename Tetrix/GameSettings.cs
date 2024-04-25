@@ -9,6 +9,7 @@ namespace Tetrix
     public class GameSettings : ReadOnlyGameSettingsIF
     {
         //Change to more uints?
+        //Change to double values?
         private int minFallingSpeed;
         private int maxFallingSpeed;
         private int rampUp;
