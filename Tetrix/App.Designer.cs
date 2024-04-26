@@ -230,6 +230,7 @@
             Controls.Add(gamePanel);
             Name = "App";
             Text = "Tetrix";
+            KeyDown += App_KeyDown;
             mainMenuPanel.ResumeLayout(false);
             mainMenuPanel.PerformLayout();
             highScorePanel.ResumeLayout(false);

@@ -1,5 +1,7 @@
+using System.Threading;
 using Tetrix.src.Components;
 using Tetrix.src.Director;
+using Tetrix.src.Threads;
 
 namespace Tetrix
 {
@@ -8,14 +10,15 @@ namespace Tetrix
         GameDirectorAC gameDirector;
         Board board;
         List<Thread> threads;
+        InputThread inputThread;
         src.Game game;
         public App()
         {
             InitializeComponent();
+            this.KeyPreview = true;
             highScorePanel.Visible = false;
             gamePanel.Visible = false;
             mainMenuPanel.Visible = true;
-
             try
             {
                 StreamReader scoreReader = new StreamReader("Data\\modes.txt");
@@ -55,7 +58,6 @@ namespace Tetrix
                 mainMenuPanel.Visible = false;
                 highScorePanel.Visible = true;
                 this.ResumeLayout();
-                //highScorePanel.BringToFront();
 
                 int scoreCounter = 1;
                 highScoresLabel.Text = "";
@@ -89,6 +91,10 @@ namespace Tetrix
             foreach (GameElementIF component in game.getGameComponents()) if (component is Board b) board = b;
 
             threads = game.start();
+            this.inputThread = new InputThread(board);
+            Thread inputThread = new Thread(new ThreadStart(this.inputThread.run));
+            inputThread.Name = "Input";
+            threads.Add(inputThread);
             this.SuspendLayout();
             mainMenuPanel.Visible = false;
             highScorePanel.Visible = false;
@@ -104,6 +110,22 @@ namespace Tetrix
             highScorePanel.Visible = false;
             mainMenuPanel.Visible = true;
             gameExitButton.Visible = false;
+        }
+
+        private void App_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Down)
+            {
+                inputThread.setDirection("down");
+            }
+            else if(e.KeyCode == Keys.Left)
+            {
+                inputThread.setDirection("left");
+            }
+            else if (e.KeyCode == Keys.Right)
+            {
+                inputThread.setDirection("right");
+            }
         }
     }
 }

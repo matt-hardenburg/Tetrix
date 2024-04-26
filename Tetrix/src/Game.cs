@@ -44,9 +44,9 @@ namespace Tetrix.src
                 if (gameComponent is Board)
                 {
                     //TODO: input functionality untested
-                    thread = new Thread(new ThreadStart(new InputThread((Board)gameComponent).run));
+                    /*thread = new Thread(new ThreadStart(new InputThread((Board)gameComponent).run));
                     thread.Name = "Input";
-                    threads.Add(thread);
+                    threads.Add(thread);*/
 
                     thread = new Thread(new ThreadStart(new GameThread(getGameSettings(), (Board)gameComponent).run));
                     thread.Name = "Game";

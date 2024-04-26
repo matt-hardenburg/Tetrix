@@ -144,7 +144,7 @@ namespace Tetrix.src.Components
                             {
                                 int currentX = block.getGridLocationX();
                                 int currentY = block.getGridLocationY();
-                                if (!(currentX > 1 && (blockGrid[currentY, currentX - 1].getBlockType().getBlockTypeName().Equals("null") || shapeContainsBlock(currentX - 1, currentY))))
+                                if (!(currentX > 0 && (blockGrid[currentY, currentX - 1].getBlockType().getBlockTypeName().Equals("null") || shapeContainsBlock(currentX - 1, currentY))))
                                 {
                                     moveTrue = false;
                                     break;
@@ -213,6 +213,7 @@ namespace Tetrix.src.Components
                     }
                 }
             }
+            clearedFilledLines();
         }
 
         public void clearedFilledLines()
