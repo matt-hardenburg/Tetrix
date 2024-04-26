@@ -1,10 +1,14 @@
-﻿namespace Tetrix.src.Components.Block
+﻿using System.Drawing;
+
+namespace Tetrix.src.Components.Block
 {
     public class NullBlock : BlockTypeIF
     {
-        public void draw()
+        public void draw(Graphics graphics, int x, int y, int height, int width)
         {
-            return;
+            Rectangle rectangle = new Rectangle(x, y, width, height);
+            graphics.DrawRectangle(new Pen(Color.Black), rectangle);
+            graphics.FillRectangle(new SolidBrush(Color.Black), rectangle);
         }
     }
 }

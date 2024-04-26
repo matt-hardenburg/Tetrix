@@ -51,6 +51,9 @@ namespace Tetrix.src
                     thread = new Thread(new ThreadStart(new GameThread(getGameSettings(), (Board)gameComponent).run));
                     thread.Name = "Game";
                     threads.Add(thread);
+
+                    getGameSettings().getShapeBuilder().generateShape();
+                    ((Board)gameComponent).addShapeToBoard(getGameSettings().getShapeBuilder().getShape());
                 }
                 else if (gameComponent is Components.Timer)
                 {

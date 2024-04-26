@@ -31,7 +31,7 @@ namespace Tetrix
                 changeModeBox.Items.Add("Hard");
             }
 
-            gameDirector = new NormalGameDirector(scoreValueLabel, timerValueLabel);
+            gameDirector = new NormalGameDirector(scoreValueLabel, timerValueLabel, boardPanel);
         }
 
         public List<Thread> getThreads()

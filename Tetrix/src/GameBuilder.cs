@@ -12,9 +12,9 @@ namespace Tetrix.src
             return game;
         }
 
-        public void addBoard(int gridHeight, int gridWidth)
+        public void addBoard(int gridHeight, int gridWidth, Panel boardPanel)
         {
-            Board board = new Board(gridHeight, gridWidth);
+            Board board = new Board(gridHeight, gridWidth, boardPanel);
             board.addObserver(game);
             game.getGameComponents().Add(board);
         }

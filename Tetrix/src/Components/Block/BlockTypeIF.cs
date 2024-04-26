@@ -2,6 +2,6 @@
 {
     public interface BlockTypeIF
     {
-        void draw();
+        void draw(Graphics graphics, int x, int y, int height, int width);
     }
 }

@@ -9,6 +9,7 @@ namespace Tetrix.src.Components
         private BlockIF[,] blockGrid;
         private ShapeIF currentShape;
         private ObservableIF observerManager;
+        private Panel boardPanel;
 
         public enum Events : int
         {
@@ -17,7 +18,7 @@ namespace Tetrix.src.Components
             TopOfScreen = 3
         }
 
-        public Board(int gridHeight, int gridWidth)
+        public Board(int gridHeight, int gridWidth, Panel boardPanel)
         {
             blockGrid = new BlockIF[gridHeight, gridWidth];
             observerManager = new ObserverManager();
@@ -25,13 +26,18 @@ namespace Tetrix.src.Components
             for (int i = 0; i < gridHeight; i++)
                 for (int j = 0; j < gridWidth; j++)
                     blockGrid[i, j] = new BlockContext(j, i, "null");
+            this.boardPanel = boardPanel;
         }
 
         void GameElementIF.draw()
         {
             lock (this)
             {
-               // throw new NotImplementedException();
+                Graphics g = boardPanel.CreateGraphics();
+                int blockHeight = boardPanel.Height / blockGrid.GetLength(0);
+                int blockWidth = boardPanel.Width / blockGrid.GetLength(1);
+                foreach (BlockIF block in blockGrid)
+                    block.draw(g, blockHeight, blockWidth);
             }
         }
 
@@ -57,7 +63,7 @@ namespace Tetrix.src.Components
                         }
                         offsetX = block.getGridLocationX() - firstX;
                         offsetY = block.getGridLocationY() - firstY;
-                        int gridX = blockGrid.GetLength(1) / 2 + offsetX;
+                        int gridX = (blockGrid.GetLength(1) / 2) + offsetX;
                         int gridY = offsetY;
                         if (blockGrid[gridY, gridX] is NullBlock)
                         {

@@ -2,7 +2,7 @@
 
 namespace Tetrix.src.Components.Shape
 {
-    public interface ShapeIF : GameElementIF
+    public interface ShapeIF
     {
         BlockIF[,] getBlocks();
     }

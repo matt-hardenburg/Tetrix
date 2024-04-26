@@ -11,14 +11,9 @@ namespace Tetrix.src.Components.Shape
             this.blocks = blocks;
         }
 
-        public void draw()
-        {
-            throw new NotImplementedException();
-        }
-
         public BlockIF[,] getBlocks()
         {
-            throw new NotImplementedException();
+            return blocks;
         }
     }
 }
