@@ -12,7 +12,6 @@ namespace Tetrix.src
         private GameModeAC gameMode;
         private List<GameElementIF> gameComponents;
         private ReadOnlyGameSettingsIF gameSettings;
-        private readonly List<Thread> threads;
 
         //Lots of casting between game components, should eliminate
 
@@ -32,48 +31,61 @@ namespace Tetrix.src
             gameComponents = new List<GameElementIF>();
             gameComponents.Add(this);
             gameSettings = new GameSettings();
-            threads = new List<Thread>();
         }
 
-        public void start()
+        public List<Thread> start()
         {
+            List<Thread> threads = new List<Thread>();
+            
             //thread creation
             foreach (GameElementIF gameComponent in gameComponents)
             {
+                Thread thread;
                 if (gameComponent is Board)
                 {
-                    threads.Add(new Thread(new InputThread((Board)gameComponent).run));
-                    threads.Add(new Thread(new GameThread(getGameSettings(),
-                                                            (Board)gameComponent).run));
+                    //TODO: input functionality untested
+                    thread = new Thread(new ThreadStart(new InputThread((Board)gameComponent).run));
+                    thread.Name = "Input";
+                    threads.Add(thread);
+
+                    thread = new Thread(new ThreadStart(new GameThread(getGameSettings(), (Board)gameComponent).run));
+                    thread.Name = "Game";
+                    threads.Add(thread);
                 }
                 else if (gameComponent is Components.Timer)
-                    threads.Add(new Thread(new TimerThread((Components.Timer)gameComponent).run));
+                {
+                    thread = new Thread(new ThreadStart(new TimerThread((Components.Timer)gameComponent).run));
+                    thread.Name = "Timer";
+                    threads.Add(thread);
+                }
                 else if (gameComponent is Game)
-                    threads.Add(new Thread(new GraphicsThread((Game)gameComponent).run));
+                {
+                    thread = new Thread(new ThreadStart(new GraphicsThread((Game)gameComponent).run));
+                    thread.Name = "Graphics";
+                    threads.Add(thread);
+                }
             }
 
-            foreach (Thread thread in threads) thread.Start();
+            //foreach (Thread thread in threads) thread.Start();
+
+            return threads;
         }
 
-        public void exit()
+        public void exit(List<Thread>? threads)
         {
+            if (threads is null) return;
             Terminator.doShutDown();
             foreach (Thread thread in threads) thread.Join();
         }
 
         public void draw()
         {
-            foreach (GameElementIF gameElement in gameComponents) gameElement.draw();
+            foreach (GameElementIF gameElement in gameComponents) if (gameElement is not Game) gameElement.draw();
         }
 
         public List<GameElementIF> getGameComponents()
         {
             return gameComponents;
-        }
-
-        public List<Thread> getThreads()
-        {
-            return threads;
         }
 
         public void setGameSettings(GameSettings gameSettings)
@@ -86,7 +98,8 @@ namespace Tetrix.src
             switch (_event)
             {
                 case Board.Events.TopOfScreen:
-                    exit();
+                    App? app = Application.OpenForms["App"] as App;
+                    exit(app?.getThreads());
                     break;
                 case Board.Events.PieceStopped:
                     foreach (GameElementIF element in gameComponents)

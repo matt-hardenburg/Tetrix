@@ -23,19 +23,15 @@ namespace Tetrix.src.Components
             observerManager = new ObserverManager();
 
             for (int i = 0; i < gridHeight; i++)
-            {
                 for (int j = 0; j < gridWidth; j++)
-                {
                     blockGrid[i, j] = new BlockContext(j, i, "null");
-                }
-            }
         }
 
         void GameElementIF.draw()
         {
             lock (this)
             {
-                throw new NotImplementedException();
+               // throw new NotImplementedException();
             }
         }
 
@@ -84,6 +80,8 @@ namespace Tetrix.src.Components
             bool moveTrue = true;
             lock (this)
             {
+                if (currentShape is null) return;
+
                 if (direction.Equals("down"))
                 {
                     BlockIF[,] shapeBlocks = currentShape.getBlocks();

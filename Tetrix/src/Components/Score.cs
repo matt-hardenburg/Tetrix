@@ -7,21 +7,34 @@ namespace Tetrix.src.Components
     {
         private uint currentScore;
         private ReadOnlyGameSettingsIF gameSettings;
+        private Label scoreValueLabel;
 
-        public Score(ReadOnlyGameSettingsIF gameSettings)
+        public Score(ReadOnlyGameSettingsIF gameSettings, Label scoreValueLabel)
         {
             currentScore = 0;
             this.gameSettings = gameSettings;
+            this.scoreValueLabel = scoreValueLabel;
         }
 
         public void draw()
         {
-            throw new NotImplementedException();
+            if (scoreValueLabel.InvokeRequired)
+                scoreValueLabel.Invoke((MethodInvoker)(() => { scoreValueLabel.Text = currentScore.ToString(); }));
         }
 
         public uint getCurrentScore()
         {
             return currentScore;
+        }
+
+        public Label getScoreValueLabel()
+        {
+            return scoreValueLabel;
+        }
+
+        public void setScoreValueLabel(Label scoreValueLabel)
+        {
+            this.scoreValueLabel = scoreValueLabel;
         }
 
         public void setCurrentScore(uint currentScore)

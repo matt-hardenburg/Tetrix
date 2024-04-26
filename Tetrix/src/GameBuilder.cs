@@ -19,18 +19,18 @@ namespace Tetrix.src
             game.getGameComponents().Add(board);
         }
 
-        public void addScore()
+        public void addScore(Label scoreValueLabel)
         {
-            Score score = new Score(game.getGameSettings());
+            Score score = new Score(game.getGameSettings(), scoreValueLabel);
             game.getGameComponents().Add(score);
             foreach (GameElementIF component in game.getGameComponents())
                 if (component is ObservableIF observableComponent)
                     observableComponent.addObserver(score);
         }
 
-        public void addTimer()
+        public void addTimer(Label timervalueLabel)
         {
-            game.getGameComponents().Add(new Components.Timer());
+            game.getGameComponents().Add(new Components.Timer(timervalueLabel));
         }
 
         public void newGame(string gameMode)

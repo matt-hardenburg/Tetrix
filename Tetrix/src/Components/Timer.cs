@@ -3,6 +3,23 @@
     public class Timer : GameElementIF
     {
         private uint currentTime;
+        private Label timerValueLabel;
+
+        public Timer(Label timerValueLabel)
+        {
+            this.timerValueLabel = timerValueLabel;
+        }
+
+
+        public Label getTimerValueLabel()
+        {
+            return timerValueLabel;
+        }
+
+        public void setTimerValueLabel(Label timerValueLabel)
+        {
+            this.timerValueLabel = timerValueLabel;
+        }
 
         public uint getCurrentTime()
         {
@@ -16,7 +33,8 @@
 
         public void draw()
         {
-            throw new NotImplementedException();
+            if (timerValueLabel.InvokeRequired) 
+                timerValueLabel.Invoke((MethodInvoker) (() => { timerValueLabel.Text = currentTime.ToString(); }));
         }
     }
 }

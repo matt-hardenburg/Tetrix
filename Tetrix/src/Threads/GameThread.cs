@@ -21,7 +21,7 @@ namespace Tetrix.src.Threads
         protected override void doJob()
         {
             Thread.Sleep(currentFallingSpeed * 1000);
-            board.moveCurrentShape("down");
+            lock (board) board.moveCurrentShape("down");
             rampUpCounter++;
             if (currentFallingSpeed > gameSettings.getMaxFallingSpeed())
             {
