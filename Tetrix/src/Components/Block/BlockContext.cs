@@ -38,6 +38,11 @@ namespace Tetrix.src.Components.Block
             gridLocationY = y;
         }
 
+        public BlockTypeIF getBlockType()
+        {
+            return blockType;
+        }
+
         public void draw(Graphics graphics, int height, int width)
         {
             blockType.draw(graphics, gridLocationX * width, gridLocationY * height, height, width);

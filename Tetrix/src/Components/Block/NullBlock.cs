@@ -10,5 +10,10 @@ namespace Tetrix.src.Components.Block
             graphics.DrawRectangle(new Pen(Color.Black), rectangle);
             graphics.FillRectangle(new SolidBrush(Color.Black), rectangle);
         }
+
+        public string getBlockTypeName()
+        {
+            return "null";
+        }
     }
 }
