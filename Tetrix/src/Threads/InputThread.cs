@@ -19,7 +19,7 @@ namespace Tetrix.src.Threads
         protected override void doJob()
         {
             if (direction.Equals("")) return;
-            lock(board) board.moveCurrentShape(direction);
+            board.moveCurrentShape(direction);
             direction = "";
         }
 

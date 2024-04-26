@@ -12,10 +12,9 @@ namespace Tetrix
         public App()
         {
             InitializeComponent();
-            highScorePanel.Visible = true;
-            gamePanel.Visible = true;
+            highScorePanel.Visible = false;
+            gamePanel.Visible = false;
             mainMenuPanel.Visible = true;
-            mainMenuPanel.BringToFront();
 
             try
             {
@@ -73,9 +72,8 @@ namespace Tetrix
         {
             this.SuspendLayout();
             mainMenuPanel.Visible = true;
-            //highScorePanel.Visible = false;
+            highScorePanel.Visible = false;
             this.ResumeLayout();
-            mainMenuPanel.BringToFront();
         }
 
         private void startGameBtn_Click(object sender, EventArgs e)
@@ -96,25 +94,15 @@ namespace Tetrix
             highScorePanel.Visible = false;
             gamePanel.Visible = true;
             this.ResumeLayout();
-            gamePanel.BringToFront();
             gameExitButton.Visible = true;
             foreach (Thread thread in threads) thread.Start();
-
-            BufferedGraphicsContext currentContext;
-            BufferedGraphics myBuffer;
-            // Gets a reference to the current BufferedGraphicsContext
-            currentContext = BufferedGraphicsManager.Current;
-            // Creates a BufferedGraphics instance associated with Form1, and with
-            // dimensions the same size as the drawing surface of Form1.
-            myBuffer = currentContext.Allocate(this.CreateGraphics(), this.DisplayRectangle);
         }
 
         private void gameExitButton_Click(object sender, EventArgs e)
         {
             game.exit(threads);
-            highScorePanel.Visible = true;
+            highScorePanel.Visible = false;
             mainMenuPanel.Visible = true;
-            mainMenuPanel.BringToFront();
             gameExitButton.Visible = false;
         }
     }
