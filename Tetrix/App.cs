@@ -1,3 +1,4 @@
+using System.Drawing.Design;
 using System.Threading;
 using Tetrix.src.Components;
 using Tetrix.src.Director;
@@ -12,13 +13,18 @@ namespace Tetrix
         List<Thread> threads;
         InputThread inputThread;
         src.Game game;
+        uint[] currentHighScores, tempHighScores;
+        bool highScoresRetreived;
         public App()
         {
             InitializeComponent();
+            parseHighScores("Data\\highscores.txt");
+
             this.KeyPreview = true;
             highScorePanel.Visible = false;
             gamePanel.Visible = false;
             mainMenuPanel.Visible = true;
+
             try
             {
                 StreamReader scoreReader = new StreamReader("Data\\modes.txt");
@@ -34,7 +40,7 @@ namespace Tetrix
                 changeModeBox.Items.Add("Hard");
             }
 
-            gameDirector = new NormalGameDirector(scoreValueLabel, timerValueLabel, boardPanel);
+            gameDirector = new NormalGameDirector(scoreValueLabel, timerValueLabel, boardPanel, currentHighScores);
         }
 
         public List<Thread> getThreads()
@@ -49,25 +55,20 @@ namespace Tetrix
 
         private void highScoreBtn_Click(object sender, EventArgs e)
         {
-            try
+            parseHighScores("Data\\highscores.txt"); //ensure latest information
+            this.SuspendLayout();
+            mainMenuPanel.Visible = false;
+            highScorePanel.Visible = true;
+            this.ResumeLayout();
+
+            int scoreCounter = 1;
+            highScoresLabel.Text = "";
+
+            foreach (uint score in currentHighScores)
             {
-                StreamReader scoreReader = new StreamReader("Data\\highscores.txt");
-                string score;
-
-                this.SuspendLayout();
-                mainMenuPanel.Visible = false;
-                highScorePanel.Visible = true;
-                this.ResumeLayout();
-
-                int scoreCounter = 1;
-                highScoresLabel.Text = "";
-                while ((score = scoreReader.ReadLine()) != null && scoreCounter <= 5)
-                {
-                    highScoresLabel.Text += scoreCounter + ". " + score + "\n";
-                    scoreCounter++;
-                }
+                highScoresLabel.Text += scoreCounter + ". " + score.ToString() + "\n";
+                scoreCounter++;
             }
-            catch (IOException) { highScoresLabel.Text = "Unable to retrieve scores."; }
         }
 
         private void highScoreReturnBtn_Click(object sender, EventArgs e)
@@ -125,6 +126,28 @@ namespace Tetrix
             else if (e.KeyCode == Keys.Right)
             {
                 inputThread.setDirection("right");
+            }
+        }
+
+        private void parseHighScores(string path)
+        {
+            currentHighScores = new uint[5];
+            int scoreCounter = 0;
+
+            try
+            {
+                StreamReader scoreReader = new StreamReader(path);
+                string score;
+
+
+                while ((score = scoreReader.ReadLine()) != null && scoreCounter < 5)
+                {
+                    currentHighScores[scoreCounter] = uint.Parse(score);
+                    scoreCounter++;
+                }
+            }
+            catch (IOException) { Console.Error.WriteLine("Unable to retrieve scores.");
+                highScoresRetreived = false;
             }
         }
     }
