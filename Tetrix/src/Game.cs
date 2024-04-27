@@ -12,12 +12,10 @@ namespace Tetrix.src
         private GameModeAC gameMode;
         private List<GameElementIF> gameComponents;
         private ReadOnlyGameSettingsIF gameSettings;
-        private uint[] highScores;
-        private Label scoreValueLabel;
 
         //Lots of casting between game components, should eliminate
 
-        public Game(string gameMode, uint[] highScores, Label scoreValueLabel)
+        public Game(string gameMode)
         {
             //Not working
             Type type = Type.GetType("Tetrix.src.Modes." + gameMode + "GameMode");
@@ -34,11 +32,9 @@ namespace Tetrix.src
             gameComponents = new List<GameElementIF>();
             gameComponents.Add(this);
             gameSettings = new GameSettings();
-            this.highScores = highScores;
-            this.scoreValueLabel = scoreValueLabel;
         }
 
-        public List<Thread> start()
+        public List<Thread> start(uint[] highScores, Label scoreValueLabel, Panel boardPanel, Label gameOverLabel, Button returnButton )
         {
             List<Thread> threads = new List<Thread>();
             
@@ -68,7 +64,7 @@ namespace Tetrix.src
                 }
                 else if (gameComponent is Game)
                 {
-                    thread = new Thread(new ThreadStart(new GraphicsThread((Game)gameComponent).run));
+                    thread = new Thread(new ThreadStart(new GraphicsThread((Game)gameComponent, boardPanel, gameOverLabel, returnButton).run));
                     thread.Name = "Graphics";
                     threads.Add(thread);
                 }
@@ -79,10 +75,10 @@ namespace Tetrix.src
             return threads;
         }
 
-        public void exit(List<Thread>? threads)
+        public void exit(List<Thread>? threads, bool normalShutdown)
         {
             if (threads is null) return;
-            Terminator.doShutDown();
+            Terminator.doShutDown(normalShutdown);
             foreach (Thread thread in threads) thread.Join();
         }
 
@@ -107,7 +103,7 @@ namespace Tetrix.src
             {
                 case Board.Events.TopOfScreen:
                     App? app = Application.OpenForms["App"] as App;
-                    exit(app?.getThreads());
+                    exit(app?.getThreads(), true);
                     break;
                 case Board.Events.PieceStopped:
                     foreach (GameElementIF element in gameComponents)

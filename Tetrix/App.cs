@@ -1,5 +1,3 @@
-using System.Drawing.Design;
-using System.Threading;
 using Tetrix.src.Components;
 using Tetrix.src.Director;
 using Tetrix.src.Threads;
@@ -15,15 +13,16 @@ namespace Tetrix
         src.Game game;
         uint[] currentHighScores;
         bool highScoresRetreived;
+
         public App()
         {
             InitializeComponent();
             highScoresRetreived = parseHighScores("Data\\highscores.txt");
 
             this.KeyPreview = true;
-            highScorePanel.Visible = false;
-            gamePanel.Visible = false;
-            mainMenuPanel.Visible = true;
+           // highScorePanel.Visible = false;
+           // gamePanel.Visible = false;
+           // mainMenuPanel.Visible = true;
 
             try
             {
@@ -40,7 +39,7 @@ namespace Tetrix
                 changeModeBox.Items.Add("Hard");
             }
 
-            gameDirector = new NormalGameDirector(scoreValueLabel, timerValueLabel, boardPanel, currentHighScores);
+            gameDirector = new NormalGameDirector(scoreValueLabel, timerValueLabel, boardPanel);
         }
 
         public List<Thread> getThreads()
@@ -65,8 +64,8 @@ namespace Tetrix
             int scoreCounter = 1;
             highScoresLabel.Text = "";
 
-            if (!highScoresRetreived) 
-            { 
+            if (!highScoresRetreived)
+            {
                 highScoresLabel.Text = "Unable to retrieve scores.";
                 return;
             }
@@ -98,23 +97,25 @@ namespace Tetrix
 
             foreach (GameElementIF component in game.getGameComponents()) if (component is Board b) board = b;
 
-            threads = game.start();
+            threads = game.start(currentHighScores, scoreValueLabel, boardPanel, gameOverLabel, returnToMainMenuButton);
             this.inputThread = new InputThread(board);
             Thread inputThread = new Thread(new ThreadStart(this.inputThread.run));
             inputThread.Name = "Input";
             threads.Add(inputThread);
+
             this.SuspendLayout();
             mainMenuPanel.Visible = false;
             highScorePanel.Visible = false;
             gamePanel.Visible = true;
             this.ResumeLayout();
             gameExitButton.Visible = true;
+
             foreach (Thread thread in threads) thread.Start();
         }
 
         private void gameExitButton_Click(object sender, EventArgs e)
         {
-            game.exit(threads);
+            game.exit(threads, false);
             highScorePanel.Visible = false;
             mainMenuPanel.Visible = true;
             gameExitButton.Visible = false;
@@ -122,17 +123,25 @@ namespace Tetrix
 
         private void App_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Down)
+            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S)
             {
                 inputThread.setDirection("down");
             }
-            else if(e.KeyCode == Keys.Left)
+            else if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
             {
                 inputThread.setDirection("left");
             }
-            else if (e.KeyCode == Keys.Right)
+            else if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
             {
                 inputThread.setDirection("right");
+            }
+            else if (e.KeyCode == Keys.Q)
+            {
+                inputThread.setRotation("left");
+            }
+            else if (e.KeyCode == Keys.E)
+            {
+                inputThread.setRotation("right");
             }
         }
 
@@ -156,11 +165,23 @@ namespace Tetrix
                 scoreReader.Close();
                 return true;
             }
-            catch (IOException) 
-            { 
+            catch (IOException)
+            {
                 Console.Error.WriteLine("Unable to retrieve scores.");
                 return false;
             }
+        }
+
+        private void returnToMainMenuButton_Click(object sender, EventArgs e)
+        {
+            returnToMainMenuButton.Visible = false;
+            gameOverLabel.Visible = false;
+            boardPanel.Visible = true;
+            scoreValueLabel.Text = "";
+            timerValueLabel.Text = "";
+            boardPanel.CreateGraphics().Clear(Color.Black);
+            highScorePanel.Visible = true;
+            mainMenuPanel.Visible = true;
         }
     }
 }

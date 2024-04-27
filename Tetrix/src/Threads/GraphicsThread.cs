@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tetrix.src.Threads
+﻿namespace Tetrix.src.Threads
 {
     public class GraphicsThread : ThreadAC
     {
         private Game game;
+        Panel boardPanel;
+        Label gameOverLabel;
+        Button returnToMainMenuButton;
 
-        public GraphicsThread(Game game)
+        public GraphicsThread(Game game, Panel boardPanel, Label gameOverLabel, Button returnButton)
         {
             this.game = game;
+            this.boardPanel = boardPanel;
+            this.gameOverLabel = gameOverLabel;
+            this.returnToMainMenuButton = returnButton;
         }
 
         protected override void doJob()
@@ -24,9 +24,16 @@ namespace Tetrix.src.Threads
         //Finish this
         protected override void shutDown()
         {
+            if(Terminator.isNormalShutdown())
+            {
+                boardPanel.Visible = false;
+                gameOverLabel.Visible = true;
+                returnToMainMenuButton.Visible = true;
+            }
+
+            returnToMainMenuButton.PerformClick();
+
             base.shutDown();
-            //Display panel with score
-            //Return to main menu
         }
     }
 }

@@ -216,6 +216,11 @@ namespace Tetrix.src.Components
             clearedFilledLines();
         }
 
+        public void rotateCurrentShape(string rotation)
+        {
+            //TODO: implement rotating
+        }
+
         public void clearedFilledLines()
         {
             lock (this)
@@ -241,7 +246,7 @@ namespace Tetrix.src.Components
                         {
                             for (int col = blockGrid.GetLength(1); col >= 0; col--)
                             {
-                                BlockIF block = blockGrid[row, col];
+                                BlockIF block = blockGrid[row, col]; //crashes here when clearing line
                                 if (!block.getBlockType().getBlockTypeName().Equals("null"))
                                 {
                                     int currentX = block.getGridLocationX();
