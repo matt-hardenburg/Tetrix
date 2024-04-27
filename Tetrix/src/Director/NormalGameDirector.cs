@@ -17,7 +17,7 @@
 
         public override Game build(string gameMode)
         {
-            gameBuilder.newGame(gameMode, highScores);
+            gameBuilder.newGame(gameMode, highScores, scoreValueLabel);
             gameBuilder.addBoard(25, 20, boardPanel);
             gameBuilder.addTimer(timerValueLabel);
             gameBuilder.addScore(scoreValueLabel);

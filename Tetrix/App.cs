@@ -13,12 +13,12 @@ namespace Tetrix
         List<Thread> threads;
         InputThread inputThread;
         src.Game game;
-        uint[] currentHighScores, tempHighScores;
+        uint[] currentHighScores;
         bool highScoresRetreived;
         public App()
         {
             InitializeComponent();
-            parseHighScores("Data\\highscores.txt");
+            highScoresRetreived = parseHighScores("Data\\highscores.txt");
 
             this.KeyPreview = true;
             highScorePanel.Visible = false;
@@ -55,7 +55,8 @@ namespace Tetrix
 
         private void highScoreBtn_Click(object sender, EventArgs e)
         {
-            parseHighScores("Data\\highscores.txt"); //ensure latest information
+            highScoresRetreived = parseHighScores("Data\\highscores.txt"); //ensure latest information
+
             this.SuspendLayout();
             mainMenuPanel.Visible = false;
             highScorePanel.Visible = true;
@@ -63,6 +64,12 @@ namespace Tetrix
 
             int scoreCounter = 1;
             highScoresLabel.Text = "";
+
+            if (!highScoresRetreived) 
+            { 
+                highScoresLabel.Text = "Unable to retrieve scores.";
+                return;
+            }
 
             foreach (uint score in currentHighScores)
             {
@@ -129,7 +136,7 @@ namespace Tetrix
             }
         }
 
-        private void parseHighScores(string path)
+        private bool parseHighScores(string path)
         {
             currentHighScores = new uint[5];
             int scoreCounter = 0;
@@ -145,9 +152,14 @@ namespace Tetrix
                     currentHighScores[scoreCounter] = uint.Parse(score);
                     scoreCounter++;
                 }
+
+                scoreReader.Close();
+                return true;
             }
-            catch (IOException) { Console.Error.WriteLine("Unable to retrieve scores.");
-                highScoresRetreived = false;
+            catch (IOException) 
+            { 
+                Console.Error.WriteLine("Unable to retrieve scores.");
+                return false;
             }
         }
     }
