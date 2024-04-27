@@ -38,9 +38,9 @@ namespace Tetrix.src
             game.getGameComponents().Add(gameDirector.build(gameMode));
         }
 
-        public void newGame(string gameMode)
+        public void newGame(string gameMode, uint[] highScores)
         {
-            game = new Game(gameMode);
+            game = new Game(gameMode, highScores);
         }
     }
 }

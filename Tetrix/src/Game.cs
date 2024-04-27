@@ -12,10 +12,12 @@ namespace Tetrix.src
         private GameModeAC gameMode;
         private List<GameElementIF> gameComponents;
         private ReadOnlyGameSettingsIF gameSettings;
+        private uint[] highScores;
+        private Label scoreLabelvalue;
 
         //Lots of casting between game components, should eliminate
 
-        public Game(string gameMode)
+        public Game(string gameMode, uint[] highScores, Label scoreLabelvalue)
         {
             //Not working
             Type type = Type.GetType("Tetrix.src.Modes." + gameMode + "GameMode");
@@ -32,6 +34,8 @@ namespace Tetrix.src
             gameComponents = new List<GameElementIF>();
             gameComponents.Add(this);
             gameSettings = new GameSettings();
+            this.highScores = highScores;
+            this.scoreLabelvalue = scoreLabelvalue;
         }
 
         public List<Thread> start()
@@ -49,7 +53,7 @@ namespace Tetrix.src
                     thread.Name = "Input";
                     threads.Add(thread);*/
 
-                    thread = new Thread(new ThreadStart(new GameThread(getGameSettings(), (Board)gameComponent).run));
+                    thread = new Thread(new ThreadStart(new GameThread(getGameSettings(), (Board)gameComponent, highScores, scoreLabelValue).run));
                     thread.Name = "Game";
                     threads.Add(thread);
 

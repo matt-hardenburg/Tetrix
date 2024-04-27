@@ -13,7 +13,7 @@
 
         protected virtual void shutDown()
         {
-
+            
         }
 
         protected abstract void doJob();
