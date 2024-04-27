@@ -8,7 +8,7 @@ namespace Tetrix.src.Components
     {
         private BlockIF[,] blockGrid;
         private ShapeIF currentShape;
-        private ObservableIF observerManager;
+        private ObserverManager observerManager;
         private Panel boardPanel;
 
         public enum Events : int
@@ -132,7 +132,7 @@ namespace Tetrix.src.Components
                         notifyObservers(Events.PieceStopped);
                     }
                 }
-                else if (direction.Equals("left"))
+                else if (direction.Equals("left")) //issue with drawing when moving left
                 {
                     BlockIF[,] shapeBlocks = currentShape.getBlocks();
                     for (int i = shapeBlocks.GetLength(0) - 1; i >= 0; i--)
