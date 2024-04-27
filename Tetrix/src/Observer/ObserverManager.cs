@@ -2,7 +2,7 @@
 
 namespace Tetrix.src.Observer
 {
-    public class ObserverManager : ObservableIF
+    public class ObserverManager
     {
         private List<ObserverIF> observers = new List<ObserverIF>();
 

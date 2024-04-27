@@ -33,6 +33,11 @@ namespace Tetrix.src
             game.getGameComponents().Add(new Components.Timer(timervalueLabel));
         }
 
+        public void addGame(Director.GameDirectorAC gameDirector, string gameMode)
+        {
+            game.getGameComponents().Add(gameDirector.build(gameMode));
+        }
+
         public void newGame(string gameMode)
         {
             game = new Game(gameMode);

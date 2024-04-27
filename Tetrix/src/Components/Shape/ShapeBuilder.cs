@@ -40,7 +40,7 @@ namespace Tetrix.src.Components.Shape
             int numOfBlocks = rand.Next(1, 9);
             int row = rand.Next(0, 4);
             int col = rand.Next(0, 2);
-            System.Diagnostics.Debug.WriteLine("NumOfBlocks: " + numOfBlocks);
+            //System.Diagnostics.Debug.WriteLine("NumOfBlocks: " + numOfBlocks);
             for (int num = 1; num <= numOfBlocks; num++)
             {
                 blocks[row, col] = new BlockContext(col, row, color);
@@ -58,7 +58,7 @@ namespace Tetrix.src.Components.Shape
                 col = nextCol;
             }
 
-            for (int i = 0 ; i < blocks.GetLength(0); i++)
+            /*for (int i = 0 ; i < blocks.GetLength(0); i++)
             {
                 for (int j = 0; j < blocks.GetLength(1); j++)
                 {
@@ -73,7 +73,7 @@ namespace Tetrix.src.Components.Shape
                     }
                 }
                 System.Diagnostics.Debug.WriteLine(" ");
-            }
+            }*/
 
             return blocks;
         }

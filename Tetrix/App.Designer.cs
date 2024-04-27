@@ -176,7 +176,7 @@
             // scoreValueLabel
             // 
             scoreValueLabel.AutoSize = true;
-            scoreValueLabel.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            scoreValueLabel.Font = new Font("Segoe UI", 15.75F);
             scoreValueLabel.Location = new Point(66, 205);
             scoreValueLabel.Name = "scoreValueLabel";
             scoreValueLabel.Size = new Size(0, 37);
@@ -185,10 +185,10 @@
             // scoreLabel
             // 
             scoreLabel.AutoSize = true;
-            scoreLabel.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            scoreLabel.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             scoreLabel.Location = new Point(66, 165);
             scoreLabel.Name = "scoreLabel";
-            scoreLabel.Size = new Size(82, 37);
+            scoreLabel.Size = new Size(89, 38);
             scoreLabel.TabIndex = 4;
             scoreLabel.Text = "Score";
             // 

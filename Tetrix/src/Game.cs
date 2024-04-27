@@ -17,6 +17,7 @@ namespace Tetrix.src
 
         public Game(string gameMode)
         {
+            //Not working
             Type type = Type.GetType("Tetrix.src.Modes." + gameMode + "GameMode");
             object obj = Activator.CreateInstance(type, this);
             if (obj != null && obj is GameModeAC)
