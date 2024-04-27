@@ -24,14 +24,13 @@
         //Finish this
         protected override void shutDown()
         {
-            if(Terminator.isNormalShutdown())
+            if (Terminator.isNormalShutdown())
             {
-                boardPanel.Visible = false;
-                gameOverLabel.Visible = true;
-                returnToMainMenuButton.Visible = true;
+                boardPanel.Invoke((MethodInvoker)(() => { boardPanel.Visible = false; }));
+                gameOverLabel.Invoke((MethodInvoker)(() => { gameOverLabel.Visible = true; }));
+                returnToMainMenuButton.Invoke((MethodInvoker)(() => { returnToMainMenuButton.Visible = true; }));
             }
-
-            returnToMainMenuButton.PerformClick();
+            else returnToMainMenuButton.Invoke((MethodInvoker)(() => { returnToMainMenuButton.PerformClick(); }));
 
             base.shutDown();
         }

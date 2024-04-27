@@ -17,8 +17,8 @@
 
         public static void doShutDown(bool normal)
         {
-            shutDownRequested = true;
             normalShutDown = normal;
+            shutDownRequested = true;
         }
     }
 }

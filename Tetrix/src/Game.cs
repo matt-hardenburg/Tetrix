@@ -79,7 +79,8 @@ namespace Tetrix.src
         {
             if (threads is null) return;
             Terminator.doShutDown(normalShutdown);
-            foreach (Thread thread in threads) thread.Join();
+            Thread.Yield();
+            foreach (Thread thread in threads) thread.Join(); //TODO: hard stops when graphic thread joins
         }
 
         public void draw()
