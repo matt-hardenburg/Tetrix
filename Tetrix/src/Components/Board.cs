@@ -157,9 +157,9 @@ namespace Tetrix.src.Components
 
                     if (moveTrue)
                     {
-                        for (int i = shapeBlocks.GetLength(0) - 1; i >= 0; i--)
+                        for (int i = 0; i < shapeBlocks.GetLength(0); i++)
                         {
-                            for (int j = shapeBlocks.GetLength(1) - 1; j >= 0; j--)
+                            for (int j = 0; j < shapeBlocks.GetLength(1); j++)
                             {
                                 BlockIF block = shapeBlocks[i, j];
                                 if (!block.getBlockType().getBlockTypeName().Equals("null"))
