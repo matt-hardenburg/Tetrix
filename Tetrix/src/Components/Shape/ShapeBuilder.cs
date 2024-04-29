@@ -77,5 +77,37 @@ namespace Tetrix.src.Components.Shape
 
             return blocks;
         }
+
+        protected override List<BlockIF[,]> generateRotations(BlockIF[,] shape)
+        {
+            List<BlockIF[,]> output = [];
+            if (shape == null) return output;
+
+            BlockIF currentBlock;
+            BlockIF[,] r1, r2, r3;
+
+            output.Add(shape); //r0
+
+            r1 = new BlockIF[shape.GetLength(1), shape.GetLength(0)]; // 90 degrees
+            r2 = new BlockIF[shape.GetLength(0), shape.GetLength(1)]; // 180 degrees
+            r3 = new BlockIF[shape.GetLength(1), shape.GetLength(0)]; // 270 degrees
+
+            for (int i = 0; i < shape.GetLength(0); i++)
+            {
+                for(int j = 0; j < shape.GetLength(1); j++)
+                {
+                    currentBlock = shape[i, j];
+                    r1[j, shape.GetLength(0) - 1 - i] = currentBlock;
+                    r2[shape.GetLength(0) - 1 - i, shape.GetLength(1) - 1 - j] = currentBlock;
+                    r3[shape.GetLength(1) - 1 - j, i] = currentBlock;
+                }
+            }
+
+            output.Add(r1);
+            output.Add(r2);
+            output.Add(r3);
+            
+            return output;
+        }
     }
 }

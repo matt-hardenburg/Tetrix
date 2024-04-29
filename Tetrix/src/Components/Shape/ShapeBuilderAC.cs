@@ -10,10 +10,12 @@ namespace Tetrix.src.Components.Shape
 
         protected abstract string generateColor();
 
+        protected abstract List<BlockIF[,]> generateRotations(BlockIF[,] shape);
+
         public void generateShape()
         {
             string color = generateColor();
-            shape = new Shape(generateStructure(color));
+            shape = new Shape(generateRotations(generateStructure(color)));
         }
 
         public ShapeIF getShape()
