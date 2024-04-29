@@ -17,12 +17,11 @@ namespace Tetrix.src
 
         public Game(string gameMode)
         {
-            //Not working
             Type type = Type.GetType("Tetrix.src.Modes." + gameMode + "GameMode");
             object obj = Activator.CreateInstance(type, this);
             if (obj != null && obj is GameModeAC)
             {
-                this.gameMode = (GameModeAC)obj;
+                this.gameMode = (GameModeAC) obj;
             }
             else
             {
@@ -32,6 +31,7 @@ namespace Tetrix.src
             gameComponents = new List<GameElementIF>();
             gameComponents.Add(this);
             gameSettings = new GameSettings();
+            this.gameMode.setMode();
         }
 
         public List<Thread> start(uint[] highScores, Label scoreValueLabel, Panel boardPanel, Label gameOverLabel, Button returnButton )

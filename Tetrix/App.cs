@@ -14,15 +14,22 @@ namespace Tetrix
         uint[] currentHighScores;
         bool highScoresRetreived;
 
+        /**
+         * TO DO:
+         * Refactor how inputs are given.
+         * Implement shape rotation
+         * 
+         */
+
         public App()
         {
             InitializeComponent();
             highScoresRetreived = parseHighScores("Data\\highscores.txt");
 
             this.KeyPreview = true;
-           // highScorePanel.Visible = false;
-           // gamePanel.Visible = false;
-           // mainMenuPanel.Visible = true;
+            highScorePanel.Visible = false;
+            gamePanel.Visible = false;
+            mainMenuPanel.Visible = true;
 
             try
             {

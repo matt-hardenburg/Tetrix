@@ -216,6 +216,7 @@ namespace Tetrix.src.Components
                 }
             }
             clearedFilledLines();
+            checkBoardStatus();
         }
 
         public void rotateCurrentShape(string rotation)
@@ -260,6 +261,7 @@ namespace Tetrix.src.Components
                 }
             }
             clearedFilledLines();
+            checkBoardStatus();
         }
 
         private void blackout(BlockIF[,] old)
@@ -307,7 +309,7 @@ namespace Tetrix.src.Components
                         {
                             for (int col = blockGrid.GetLength(1) - 1; col >= 0; col--)
                             {
-                                BlockIF block = blockGrid[row, col]; //crashes here when clearing line
+                                BlockIF block = blockGrid[row, col];
                                 if (!block.getBlockType().getBlockTypeName().Equals("null"))
                                 {
                                     int currentX = block.getGridLocationX();

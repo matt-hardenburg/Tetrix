@@ -59,18 +59,16 @@
             mainMenuPanel.Controls.Add(startGameBtn);
             mainMenuPanel.Controls.Add(titleLabel);
             mainMenuPanel.Controls.Add(changeModeBox);
-            mainMenuPanel.Location = new Point(64, 24);
-            mainMenuPanel.Margin = new Padding(3, 2, 3, 2);
+            mainMenuPanel.Location = new Point(73, 32);
             mainMenuPanel.Name = "mainMenuPanel";
-            mainMenuPanel.Size = new Size(565, 365);
+            mainMenuPanel.Size = new Size(646, 487);
             mainMenuPanel.TabIndex = 0;
             // 
             // exitBtn
             // 
-            exitBtn.Location = new Point(258, 189);
-            exitBtn.Margin = new Padding(3, 2, 3, 2);
+            exitBtn.Location = new Point(295, 252);
             exitBtn.Name = "exitBtn";
-            exitBtn.Size = new Size(82, 22);
+            exitBtn.Size = new Size(94, 29);
             exitBtn.TabIndex = 4;
             exitBtn.Text = "Exit";
             exitBtn.UseVisualStyleBackColor = true;
@@ -78,10 +76,9 @@
             // 
             // highScoreBtn
             // 
-            highScoreBtn.Location = new Point(246, 141);
-            highScoreBtn.Margin = new Padding(3, 2, 3, 2);
+            highScoreBtn.Location = new Point(281, 188);
             highScoreBtn.Name = "highScoreBtn";
-            highScoreBtn.Size = new Size(106, 22);
+            highScoreBtn.Size = new Size(121, 29);
             highScoreBtn.TabIndex = 3;
             highScoreBtn.Text = "High Scores";
             highScoreBtn.UseVisualStyleBackColor = true;
@@ -89,10 +86,9 @@
             // 
             // startGameBtn
             // 
-            startGameBtn.Location = new Point(258, 58);
-            startGameBtn.Margin = new Padding(3, 2, 3, 2);
+            startGameBtn.Location = new Point(295, 77);
             startGameBtn.Name = "startGameBtn";
-            startGameBtn.Size = new Size(82, 22);
+            startGameBtn.Size = new Size(94, 29);
             startGameBtn.TabIndex = 1;
             startGameBtn.Text = "Start Game";
             startGameBtn.UseVisualStyleBackColor = true;
@@ -101,19 +97,18 @@
             // titleLabel
             // 
             titleLabel.AutoSize = true;
-            titleLabel.Location = new Point(282, 26);
+            titleLabel.Location = new Point(322, 35);
             titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(35, 15);
+            titleLabel.Size = new Size(45, 20);
             titleLabel.TabIndex = 0;
             titleLabel.Text = "Tetrix";
             // 
             // changeModeBox
             // 
             changeModeBox.FormattingEnabled = true;
-            changeModeBox.Location = new Point(230, 103);
-            changeModeBox.Margin = new Padding(3, 2, 3, 2);
+            changeModeBox.Location = new Point(263, 137);
             changeModeBox.Name = "changeModeBox";
-            changeModeBox.Size = new Size(133, 23);
+            changeModeBox.Size = new Size(151, 28);
             changeModeBox.TabIndex = 5;
             // 
             // highScorePanel
@@ -121,26 +116,24 @@
             highScorePanel.Controls.Add(highScoresLabel);
             highScorePanel.Controls.Add(highScoreReturnBtn);
             highScorePanel.Controls.Add(highScoreTitle);
-            highScorePanel.Location = new Point(58, 20);
-            highScorePanel.Margin = new Padding(3, 2, 3, 2);
+            highScorePanel.Location = new Point(66, 27);
             highScorePanel.Name = "highScorePanel";
-            highScorePanel.Size = new Size(671, 416);
+            highScorePanel.Size = new Size(767, 555);
             highScorePanel.TabIndex = 1;
             // 
             // highScoresLabel
             // 
             highScoresLabel.AutoSize = true;
-            highScoresLabel.Location = new Point(268, 75);
+            highScoresLabel.Location = new Point(306, 100);
             highScoresLabel.Name = "highScoresLabel";
-            highScoresLabel.Size = new Size(0, 15);
+            highScoresLabel.Size = new Size(0, 20);
             highScoresLabel.TabIndex = 1;
             // 
             // highScoreReturnBtn
             // 
-            highScoreReturnBtn.Location = new Point(244, 267);
-            highScoreReturnBtn.Margin = new Padding(3, 2, 3, 2);
+            highScoreReturnBtn.Location = new Point(279, 356);
             highScoreReturnBtn.Name = "highScoreReturnBtn";
-            highScoreReturnBtn.Size = new Size(82, 22);
+            highScoreReturnBtn.Size = new Size(94, 29);
             highScoreReturnBtn.TabIndex = 2;
             highScoreReturnBtn.Text = "Main Menu";
             highScoreReturnBtn.UseVisualStyleBackColor = true;
@@ -149,16 +142,14 @@
             // highScoreTitle
             // 
             highScoreTitle.AutoSize = true;
-            highScoreTitle.Location = new Point(230, 23);
+            highScoreTitle.Location = new Point(263, 31);
             highScoreTitle.Name = "highScoreTitle";
-            highScoreTitle.Size = new Size(70, 15);
+            highScoreTitle.Size = new Size(88, 20);
             highScoreTitle.TabIndex = 0;
             highScoreTitle.Text = "High Scores";
             // 
             // gamePanel
             // 
-            gamePanel.Controls.Add(mainMenuPanel);
-            gamePanel.Controls.Add(highScorePanel);
             gamePanel.Controls.Add(gameExitButton);
             gamePanel.Controls.Add(scoreValueLabel);
             gamePanel.Controls.Add(scoreLabel);
@@ -168,15 +159,17 @@
             gamePanel.Controls.Add(returnToMainMenuButton);
             gamePanel.Controls.Add(gameOverLabel);
             gamePanel.Location = new Point(-1, 0);
+            gamePanel.Margin = new Padding(3, 4, 3, 4);
             gamePanel.Name = "gamePanel";
-            gamePanel.Size = new Size(703, 333);
+            gamePanel.Size = new Size(803, 444);
             gamePanel.TabIndex = 1;
             // 
             // gameExitButton
             // 
-            gameExitButton.Location = new Point(658, 3);
+            gameExitButton.Location = new Point(752, 4);
+            gameExitButton.Margin = new Padding(3, 4, 3, 4);
             gameExitButton.Name = "gameExitButton";
-            gameExitButton.Size = new Size(42, 23);
+            gameExitButton.Size = new Size(48, 31);
             gameExitButton.TabIndex = 6;
             gameExitButton.Text = "Exit";
             gameExitButton.UseVisualStyleBackColor = true;
@@ -187,18 +180,18 @@
             // 
             scoreValueLabel.AutoSize = true;
             scoreValueLabel.Font = new Font("Segoe UI", 15.75F);
-            scoreValueLabel.Location = new Point(58, 154);
+            scoreValueLabel.Location = new Point(66, 205);
             scoreValueLabel.Name = "scoreValueLabel";
-            scoreValueLabel.Size = new Size(0, 30);
+            scoreValueLabel.Size = new Size(0, 37);
             scoreValueLabel.TabIndex = 5;
             // 
             // scoreLabel
             // 
             scoreLabel.AutoSize = true;
             scoreLabel.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            scoreLabel.Location = new Point(58, 124);
+            scoreLabel.Location = new Point(66, 165);
             scoreLabel.Name = "scoreLabel";
-            scoreLabel.Size = new Size(70, 30);
+            scoreLabel.Size = new Size(89, 38);
             scoreLabel.TabIndex = 4;
             scoreLabel.Text = "Score";
             // 
@@ -206,33 +199,35 @@
             // 
             timerValueLabel.AutoSize = true;
             timerValueLabel.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            timerValueLabel.Location = new Point(560, 154);
+            timerValueLabel.Location = new Point(640, 205);
             timerValueLabel.Name = "timerValueLabel";
-            timerValueLabel.Size = new Size(0, 30);
+            timerValueLabel.Size = new Size(0, 37);
             timerValueLabel.TabIndex = 3;
             // 
             // timerLabel
             // 
             timerLabel.AutoSize = true;
             timerLabel.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            timerLabel.Location = new Point(560, 124);
+            timerLabel.Location = new Point(640, 165);
             timerLabel.Name = "timerLabel";
-            timerLabel.Size = new Size(69, 30);
+            timerLabel.Size = new Size(92, 37);
             timerLabel.TabIndex = 2;
             timerLabel.Text = "Timer";
             // 
             // boardPanel
             // 
-            boardPanel.Location = new Point(211, 35);
+            boardPanel.Location = new Point(241, 47);
+            boardPanel.Margin = new Padding(3, 4, 3, 4);
             boardPanel.Name = "boardPanel";
-            boardPanel.Size = new Size(274, 271);
+            boardPanel.Size = new Size(313, 361);
             boardPanel.TabIndex = 1;
             // 
             // returnToMainMenuButton
             // 
-            returnToMainMenuButton.Location = new Point(273, 181);
+            returnToMainMenuButton.Location = new Point(312, 241);
+            returnToMainMenuButton.Margin = new Padding(3, 4, 3, 4);
             returnToMainMenuButton.Name = "returnToMainMenuButton";
-            returnToMainMenuButton.Size = new Size(154, 23);
+            returnToMainMenuButton.Size = new Size(176, 31);
             returnToMainMenuButton.TabIndex = 7;
             returnToMainMenuButton.Text = "Main Menu";
             returnToMainMenuButton.UseVisualStyleBackColor = true;
@@ -243,19 +238,20 @@
             gameOverLabel.AutoSize = true;
             gameOverLabel.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gameOverLabel.ForeColor = Color.Red;
-            gameOverLabel.Location = new Point(273, 124);
+            gameOverLabel.Location = new Point(312, 165);
             gameOverLabel.Name = "gameOverLabel";
-            gameOverLabel.Size = new Size(154, 32);
+            gameOverLabel.Size = new Size(192, 41);
             gameOverLabel.TabIndex = 3;
             gameOverLabel.Text = "GAME OVER";
             // 
             // App
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(700, 338);
+            ClientSize = new Size(800, 451);
+            Controls.Add(highScorePanel);
+            Controls.Add(mainMenuPanel);
             Controls.Add(gamePanel);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "App";
             Text = "Tetrix";
             KeyDown += App_KeyDown;
