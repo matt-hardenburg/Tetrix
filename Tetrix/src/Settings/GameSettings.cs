@@ -14,7 +14,7 @@ namespace Tetrix.src.Settings
 
         public GameSettings()
         {
-            minFallingSpeed = 2;
+            minFallingSpeed = 3;
             maxFallingSpeed = 0.5;
             speedIncrement = 0.5;
             rampUp = 30;

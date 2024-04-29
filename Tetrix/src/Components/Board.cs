@@ -286,58 +286,52 @@ namespace Tetrix.src.Components
 
         public void clearedFilledLines()
         {
-            lock (this)
+            for (int i = 0; i < blockGrid.GetLength(0); i++)
             {
-                for (int i = 0; i < blockGrid.GetLength(0); i++)
+                bool rowClear = true;
+                for (int j = 0; j < blockGrid.GetLength(1); j++)
                 {
-                    bool rowClear = true;
+                    if (blockGrid[i, j].getBlockType().getBlockTypeName().Equals("null"))
+                    {
+                        rowClear = false;
+                        break;
+                    }
+                }
+                if (rowClear)
+                {
                     for (int j = 0; j < blockGrid.GetLength(1); j++)
                     {
-                        if (blockGrid[i, j].getBlockType().getBlockTypeName().Equals("null"))
-                        {
-                            rowClear = false;
-                            break;
-                        }
+                        blockGrid[i, j] = new BlockContext(j, i, "null");
                     }
-                    if (rowClear)
+                    for (int row = i; row >= 0; row--)
                     {
-                        for (int j = 0; j < blockGrid.GetLength(1); j++)
+                        for (int col = blockGrid.GetLength(1) - 1; col >= 0; col--)
                         {
-                            blockGrid[i, j] = new BlockContext(j, i, "null");
-                        }
-                        for (int row = i; row >= 0; row--)
-                        {
-                            for (int col = blockGrid.GetLength(1) - 1; col >= 0; col--)
+                            BlockIF block = blockGrid[row, col];
+                            if (!block.getBlockType().getBlockTypeName().Equals("null"))
                             {
-                                BlockIF block = blockGrid[row, col];
-                                if (!block.getBlockType().getBlockTypeName().Equals("null"))
-                                {
-                                    int currentX = block.getGridLocationX();
-                                    int currentY = block.getGridLocationY();
-                                    blockGrid[currentY + 1, currentX] = block;
-                                    blockGrid[currentY, currentX] = new BlockContext(currentX, currentY, "null");
-                                    block.setGridLocationY(currentY + 1);
-                                }
+                                int currentX = block.getGridLocationX();
+                                int currentY = block.getGridLocationY();
+                                blockGrid[currentY + 1, currentX] = block;
+                                blockGrid[currentY, currentX] = new BlockContext(currentX, currentY, "null");
+                                block.setGridLocationY(currentY + 1);
                             }
                         }
-                        notifyObservers(Events.LineCleared);
                     }
+                    notifyObservers(Events.LineCleared);
                 }
             }
         }
 
         public void checkBoardStatus()
         {
-            lock (this)
+            for (int i = 0; i < blockGrid.GetLength(1); i++)
             {
-                for (int i = 0; i < blockGrid.GetLength(1); i++)
+                BlockIF block = blockGrid[0, i];
+                if (!block.getBlockType().getBlockTypeName().Equals("null"))
                 {
-                    BlockIF block = blockGrid[0, i];
-                    if (!block.getBlockType().getBlockTypeName().Equals("null"))
-                    {
-                        notifyObservers(Events.TopOfScreen);
-                        break;
-                    }
+                    notifyObservers(Events.TopOfScreen);
+                    break;
                 }
             }
         }
