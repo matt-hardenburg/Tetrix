@@ -45,14 +45,14 @@ namespace Tetrix.src.Components
 
         public void addShapeToBoard(ShapeIF shape)
         {
-            currentShape = shape;
-            bool firstBlock = true;
-            int firstX = 0;
-            int firstY = 0;
-            int offsetX = 0;
-            int offsetY = 0;
             lock (this)
             {
+                currentShape = shape;
+                bool firstBlock = true;
+                int firstX = 0;
+                int firstY = 0;
+                int offsetX = 0;
+                int offsetY = 0;
                 foreach (BlockIF block in currentShape.getBlocks())
                 {
                     if (!(block.getBlockType().getBlockTypeName().Equals("null")))
@@ -134,7 +134,7 @@ namespace Tetrix.src.Components
                         notifyObservers(Events.PieceStopped);
                     }
                 }
-                else if (direction.Equals("left")) //issue with drawing when moving left
+                else if (direction.Equals("left"))
                 {
                     BlockIF[,] shapeBlocks = currentShape.getBlocks();
                     for (int i = shapeBlocks.GetLength(0) - 1; i >= 0; i--)
@@ -328,7 +328,7 @@ namespace Tetrix.src.Components
             for (int i = 0; i < blockGrid.GetLength(1); i++)
             {
                 BlockIF block = blockGrid[0, i];
-                if (!block.getBlockType().getBlockTypeName().Equals("null"))
+                if (!block.getBlockType().getBlockTypeName().Equals("null") && !shapeContainsBlock(block.getGridLocationX(), block.getGridLocationY()))
                 {
                     notifyObservers(Events.TopOfScreen);
                     break;

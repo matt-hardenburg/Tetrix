@@ -66,7 +66,8 @@
             // 
             // exitBtn
             // 
-            exitBtn.Location = new Point(295, 252);
+            exitBtn.Font = new Font("OCR A Extended", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            exitBtn.Location = new Point(273, 321);
             exitBtn.Name = "exitBtn";
             exitBtn.Size = new Size(94, 29);
             exitBtn.TabIndex = 4;
@@ -76,7 +77,8 @@
             // 
             // highScoreBtn
             // 
-            highScoreBtn.Location = new Point(281, 188);
+            highScoreBtn.Font = new Font("OCR A Extended", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            highScoreBtn.Location = new Point(259, 247);
             highScoreBtn.Name = "highScoreBtn";
             highScoreBtn.Size = new Size(121, 29);
             highScoreBtn.TabIndex = 3;
@@ -86,7 +88,8 @@
             // 
             // startGameBtn
             // 
-            startGameBtn.Location = new Point(295, 77);
+            startGameBtn.Font = new Font("OCR A Extended", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            startGameBtn.Location = new Point(273, 113);
             startGameBtn.Name = "startGameBtn";
             startGameBtn.Size = new Size(94, 29);
             startGameBtn.TabIndex = 1;
@@ -97,18 +100,22 @@
             // titleLabel
             // 
             titleLabel.AutoSize = true;
-            titleLabel.Location = new Point(322, 35);
+            titleLabel.BackColor = Color.Black;
+            titleLabel.Font = new Font("OCR A Extended", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            titleLabel.ForeColor = Color.Cyan;
+            titleLabel.Location = new Point(248, 35);
             titleLabel.Name = "titleLabel";
-            titleLabel.Size = new Size(45, 20);
+            titleLabel.Size = new Size(141, 35);
             titleLabel.TabIndex = 0;
             titleLabel.Text = "Tetrix";
             // 
             // changeModeBox
             // 
+            changeModeBox.Font = new Font("OCR A Extended", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             changeModeBox.FormattingEnabled = true;
-            changeModeBox.Location = new Point(263, 137);
+            changeModeBox.Location = new Point(238, 183);
             changeModeBox.Name = "changeModeBox";
-            changeModeBox.Size = new Size(151, 28);
+            changeModeBox.Size = new Size(151, 27);
             changeModeBox.TabIndex = 5;
             // 
             // highScorePanel
@@ -124,14 +131,15 @@
             // highScoresLabel
             // 
             highScoresLabel.AutoSize = true;
-            highScoresLabel.Location = new Point(306, 100);
+            highScoresLabel.Location = new Point(288, 118);
             highScoresLabel.Name = "highScoresLabel";
             highScoresLabel.Size = new Size(0, 20);
             highScoresLabel.TabIndex = 1;
             // 
             // highScoreReturnBtn
             // 
-            highScoreReturnBtn.Location = new Point(279, 356);
+            highScoreReturnBtn.Font = new Font("OCR A Extended", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            highScoreReturnBtn.Location = new Point(280, 326);
             highScoreReturnBtn.Name = "highScoreReturnBtn";
             highScoreReturnBtn.Size = new Size(94, 29);
             highScoreReturnBtn.TabIndex = 2;
@@ -142,9 +150,10 @@
             // highScoreTitle
             // 
             highScoreTitle.AutoSize = true;
-            highScoreTitle.Location = new Point(263, 31);
+            highScoreTitle.Font = new Font("OCR A Extended", 19.8000011F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            highScoreTitle.Location = new Point(205, 40);
             highScoreTitle.Name = "highScoreTitle";
-            highScoreTitle.Size = new Size(88, 20);
+            highScoreTitle.Size = new Size(257, 35);
             highScoreTitle.TabIndex = 0;
             highScoreTitle.Text = "High Scores";
             // 
@@ -166,10 +175,11 @@
             // 
             // gameExitButton
             // 
-            gameExitButton.Location = new Point(752, 4);
+            gameExitButton.Font = new Font("OCR A Extended", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            gameExitButton.Location = new Point(726, 4);
             gameExitButton.Margin = new Padding(3, 4, 3, 4);
             gameExitButton.Name = "gameExitButton";
-            gameExitButton.Size = new Size(48, 31);
+            gameExitButton.Size = new Size(63, 31);
             gameExitButton.TabIndex = 6;
             gameExitButton.Text = "Exit";
             gameExitButton.UseVisualStyleBackColor = true;
@@ -179,38 +189,38 @@
             // scoreValueLabel
             // 
             scoreValueLabel.AutoSize = true;
-            scoreValueLabel.Font = new Font("Segoe UI", 15.75F);
+            scoreValueLabel.Font = new Font("OCR A Extended", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             scoreValueLabel.Location = new Point(66, 205);
             scoreValueLabel.Name = "scoreValueLabel";
-            scoreValueLabel.Size = new Size(0, 37);
+            scoreValueLabel.Size = new Size(0, 32);
             scoreValueLabel.TabIndex = 5;
             // 
             // scoreLabel
             // 
             scoreLabel.AutoSize = true;
-            scoreLabel.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            scoreLabel.Font = new Font("OCR A Extended", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             scoreLabel.Location = new Point(66, 165);
             scoreLabel.Name = "scoreLabel";
-            scoreLabel.Size = new Size(89, 38);
+            scoreLabel.Size = new Size(109, 32);
             scoreLabel.TabIndex = 4;
             scoreLabel.Text = "Score";
             // 
             // timerValueLabel
             // 
             timerValueLabel.AutoSize = true;
-            timerValueLabel.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            timerValueLabel.Font = new Font("OCR A Extended", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             timerValueLabel.Location = new Point(640, 205);
             timerValueLabel.Name = "timerValueLabel";
-            timerValueLabel.Size = new Size(0, 37);
+            timerValueLabel.Size = new Size(0, 32);
             timerValueLabel.TabIndex = 3;
             // 
             // timerLabel
             // 
             timerLabel.AutoSize = true;
-            timerLabel.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            timerLabel.Font = new Font("OCR A Extended", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             timerLabel.Location = new Point(640, 165);
             timerLabel.Name = "timerLabel";
-            timerLabel.Size = new Size(92, 37);
+            timerLabel.Size = new Size(109, 32);
             timerLabel.TabIndex = 2;
             timerLabel.Text = "Timer";
             // 
@@ -224,6 +234,7 @@
             // 
             // returnToMainMenuButton
             // 
+            returnToMainMenuButton.Font = new Font("OCR A Extended", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             returnToMainMenuButton.Location = new Point(312, 241);
             returnToMainMenuButton.Margin = new Padding(3, 4, 3, 4);
             returnToMainMenuButton.Name = "returnToMainMenuButton";
@@ -236,11 +247,11 @@
             // gameOverLabel
             // 
             gameOverLabel.AutoSize = true;
-            gameOverLabel.Font = new Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            gameOverLabel.Font = new Font("OCR A Extended", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             gameOverLabel.ForeColor = Color.Red;
             gameOverLabel.Location = new Point(312, 165);
             gameOverLabel.Name = "gameOverLabel";
-            gameOverLabel.Size = new Size(192, 41);
+            gameOverLabel.Size = new Size(185, 32);
             gameOverLabel.TabIndex = 3;
             gameOverLabel.Text = "GAME OVER";
             // 
@@ -249,9 +260,9 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 451);
-            Controls.Add(highScorePanel);
             Controls.Add(mainMenuPanel);
             Controls.Add(gamePanel);
+            Controls.Add(highScorePanel);
             Name = "App";
             Text = "Tetrix";
             KeyDown += App_KeyDown;

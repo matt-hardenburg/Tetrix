@@ -25,7 +25,7 @@ namespace Tetrix
         {
             InitializeComponent();
             highScoresRetreived = parseHighScores("Data\\highscores.txt");
-
+            this.DoubleBuffered = true;
             this.KeyPreview = true;
             highScorePanel.Visible = false;
             gamePanel.Visible = false;
@@ -45,6 +45,8 @@ namespace Tetrix
                 changeModeBox.Items.Add("Normal");
                 changeModeBox.Items.Add("Hard");
             }
+
+            changeModeBox.SelectedIndex = 0;
 
             gameDirector = new NormalGameDirector(scoreValueLabel, timerValueLabel, boardPanel);
         }
@@ -124,6 +126,7 @@ namespace Tetrix
         {
             game.exit(threads, false);
             highScorePanel.Visible = false;
+            gamePanel.Visible = false;
             mainMenuPanel.Visible = true;
             gameExitButton.Visible = false;
         }
@@ -183,11 +186,12 @@ namespace Tetrix
         {
             returnToMainMenuButton.Visible = false;
             gameOverLabel.Visible = false;
+            gameExitButton.Visible = false;
             boardPanel.Visible = true;
             scoreValueLabel.Text = "";
             timerValueLabel.Text = "";
             boardPanel.CreateGraphics().Clear(Color.Black);
-            highScorePanel.Visible = true;
+            highScorePanel.Visible = false;
             mainMenuPanel.Visible = true;
         }
     }

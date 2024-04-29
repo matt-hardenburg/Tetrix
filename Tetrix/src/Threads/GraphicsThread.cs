@@ -21,7 +21,6 @@
             game.draw();
         }
 
-        //Doesn't seem to execute before thread joins
         protected override void shutDown()
         {
             if (Terminator.isNormalShutdown())
