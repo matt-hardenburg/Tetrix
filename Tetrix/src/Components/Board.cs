@@ -244,7 +244,7 @@ namespace Tetrix.src.Components
                         }
                         for (int row = i; row >= 0; row--)
                         {
-                            for (int col = blockGrid.GetLength(1); col >= 0; col--)
+                            for (int col = blockGrid.GetLength(1) - 1; col >= 0; col--)
                             {
                                 BlockIF block = blockGrid[row, col]; //crashes here when clearing line
                                 if (!block.getBlockType().getBlockTypeName().Equals("null"))

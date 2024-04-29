@@ -17,7 +17,7 @@
 
         protected override void doJob()
         {
-            Thread.Sleep(250);
+            Thread.Sleep(50);
             game.draw();
         }
 
