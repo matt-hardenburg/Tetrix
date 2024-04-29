@@ -6,12 +6,10 @@ namespace Tetrix.src.Components.Shape
     public class Shape : ShapeIF
     {
         private BlockIF[,] blocks;
-        private List<BlockIF[,]> rotations; //stored rotating clockwise
 
-        public Shape(List<BlockIF[,]> rotations)
+        public Shape(BlockIF[,] blocks)
         {
-            this.rotations = rotations;
-            this.blocks = rotations.ElementAt(0);
+            this.blocks = blocks;
         }
 
         public BlockIF[,] getBlocks()
@@ -19,49 +17,53 @@ namespace Tetrix.src.Components.Shape
             return blocks;
         }
 
-        public List<BlockIF[,]> getRotations()
+        public void setBlocks(BlockIF[,] blocks)
         {
-            return rotations;
+            this.blocks = blocks;
         }
 
-        public void setBlocks(BlockIF[,] rotation)
+        public void rotate()
         {
-            this.blocks = rotation;
-        }
+            int currentRowNumber = blocks.GetLength(0);
+            int currentColumnNumber = blocks.GetLength(1);
+            BlockIF[,] newBlocks = new BlockIF[currentColumnNumber, currentRowNumber];
+            int newRowCnt = 0;
+            int newColCnt = 0;
 
-        public void transferCoords(BlockIF[,] original, int oldRotate, int newRotate)
-        {
-            if (original == null) throw new Exception();
+            BlockIF offsetBlock = blocks[currentRowNumber / 2, currentColumnNumber / 2];
+            int gridOffsetX = offsetBlock.getGridLocationX();
+            int gridOffsetY = offsetBlock.getGridLocationY();
 
-            bool rightRotate;
-
-            for (int i = 0; i < original.GetLength(0); i++)
+            for (int i = 0; i < currentColumnNumber; i++)
             {
-                for (int j = 0; j < original.GetLength(1); j++)
+                newColCnt = 0;
+                for (int j = currentRowNumber - 1; j >= 0; j--)
                 {
-                    if (original[i, j].getBlockType().getBlockTypeName().Equals("null")) continue;
-                    int x = original[i, j].getGridLocationX();
-                    int y = original[i, j].getGridLocationY();
-                    int shiftI = blocks.GetLength(0) - 1 - i;
-                    int shiftJ = blocks.GetLength(1) - 1 - j;
+                    newBlocks[newRowCnt, newColCnt] = blocks[j, i];
 
-                    if (oldRotate == 0 && newRotate == 3) rightRotate = false; // -90
-                    else if (oldRotate == 3 && newRotate == 0) rightRotate = true; // +90
-                    else rightRotate = oldRotate < newRotate;
-
-                    switch (rightRotate)
+                   if (!blocks[j, i].getBlockType().getBlockTypeName().Equals("null"))
                     {
-                        case true: // +90
-                            blocks[j, shiftI].setGridLocationX(x); //TODO: right rotate out of bounds
-                            blocks[j, shiftI].setGridLocationY(y);
-                            break;
-                        case false: // -90
-                            blocks[shiftJ, i].setGridLocationX(x); //TODO: left rotate out of bounds
-                            blocks[shiftJ, i].setGridLocationY(y);
-                            break;
+                        int offsetX = blocks[j, i].getGridLocationX() - gridOffsetX;
+                        int offsetY = blocks[j, i].getGridLocationY() - gridOffsetY;
+                        newBlocks[newRowCnt, newColCnt].setGridLocationX(gridOffsetX - offsetY);
+                        newBlocks[newRowCnt, newColCnt].setGridLocationY(gridOffsetY + offsetX);
                     }
+
+                    newColCnt++;
                 }
+                newRowCnt++;
             }
+
+            for (int i = 0; i < newBlocks.GetLength(0); i++)
+            {
+                for (int j = 0; j <  newBlocks.GetLength(1); j++)
+                {
+                    System.Diagnostics.Debug.Write(newBlocks[i, j].getBlockType().getBlockTypeName());
+                }
+                System.Diagnostics.Debug.WriteLine("");
+            }
+
+            blocks = newBlocks;
         }
     }
 }

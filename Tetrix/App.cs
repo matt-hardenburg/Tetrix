@@ -14,13 +14,6 @@ namespace Tetrix
         uint[] currentHighScores;
         bool highScoresRetreived;
 
-        /**
-         * TO DO:
-         * Refactor how inputs are given.
-         * Implement shape rotation
-         * 
-         */
-
         public App()
         {
             InitializeComponent();
@@ -145,13 +138,9 @@ namespace Tetrix
             {
                 inputThread.setDirection("right");
             }
-            else if (e.KeyCode == Keys.Q)
+            else if (e.KeyCode == Keys.R)
             {
-                inputThread.setRotation("left");
-            }
-            else if (e.KeyCode == Keys.E)
-            {
-                inputThread.setRotation("right");
+                inputThread.setRotation(true);
             }
         }
 

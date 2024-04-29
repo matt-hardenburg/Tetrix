@@ -214,73 +214,41 @@ namespace Tetrix.src.Components
                         }
                     }
                 }
+                clearedFilledLines();
+                checkBoardStatus();
             }
-            clearedFilledLines();
-            checkBoardStatus();
         }
 
-        public void rotateCurrentShape(string rotation)
+        public void rotateCurrentShape()
         {
             lock (this)
             {
-                if (currentShape is null) return; //error return
+                bool moveTrue = true;
 
-                //store old blocks and rotation
-                BlockIF[,] oldBlocks = currentShape.getBlocks();
-                int oldRotate = rotateCounter;
-
-                //manage rotation counter
-                if (rotation.Equals("left"))
+                if (moveTrue)
                 {
-                    if (rotateCounter == 0) rotateCounter = currentShape.getRotations().Count;
-                    else rotateCounter--;
-                }
-                else if (rotation.Equals("right"))
-                {
-                    if (rotateCounter == currentShape.getRotations().Count) rotateCounter = 0;
-                    else rotateCounter++;
-                }
-                else return;
-
-                //blackout old shape
-                blackout(oldBlocks);
-
-                //assign rotation
-                currentShape.setBlocks(currentShape.getRotations().ElementAt(rotateCounter)); //TODO: left rotate out of range
-                currentShape.transferCoords(oldBlocks, oldRotate, rotateCounter);
-
-                //draw shape on block grid
-                for (int i = 0; i < currentShape.getBlocks().GetLength(0); i++)
-                {
-                    for (int j = 0; j < currentShape.getBlocks().GetLength(0); j++)
+                    foreach (BlockIF block in currentShape.getBlocks())
                     {
-                        BlockIF block = currentShape.getBlocks()[i, j]; //TODO: right rotate out of bounds
-                        if (block.getBlockType().getBlockTypeName().Equals("null")) continue;
-                        else blockGrid[block.getGridLocationX(), block.getGridLocationY()] = block;
+                        if (!block.getBlockType().getBlockTypeName().Equals("null"))
+                        {
+                            int currentX = block.getGridLocationX();
+                            int currentY = block.getGridLocationY();
+                            blockGrid[currentY, currentX] = new BlockContext(currentX, currentY, "null");
+                        }
+                    }
+                    currentShape.rotate();
+                    foreach (BlockIF block in currentShape.getBlocks())
+                    {
+                        if (!block.getBlockType().getBlockTypeName().Equals("null"))
+                        {
+                            int currentX = block.getGridLocationX();
+                            int currentY = block.getGridLocationY();
+                            blockGrid[currentY, currentX] = block;
+                        }
                     }
                 }
-            }
-            clearedFilledLines();
-            checkBoardStatus();
-        }
-
-        private void blackout(BlockIF[,] old)
-        {
-            if (old == null) return;
-
-            lock (blockGrid)
-            {
-                for (int i = 0; i < old.GetLength(0); i++)
-                {
-                    for (int j = 0; j < old.GetLength(1); j++)
-                    {
-                        BlockIF block = old[i, j];
-                        if (block.getBlockType().getBlockTypeName().Equals("null")) continue;
-                        int x = block.getGridLocationX();
-                        int y = block.getGridLocationY();
-                        blockGrid[x, y] = new BlockContext(x, y, "null");
-                    }
-                }
+                clearedFilledLines();
+                checkBoardStatus();
             }
         }
 

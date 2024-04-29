@@ -78,9 +78,9 @@
             // highScoreBtn
             // 
             highScoreBtn.Font = new Font("OCR A Extended", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            highScoreBtn.Location = new Point(259, 247);
+            highScoreBtn.Location = new Point(248, 247);
             highScoreBtn.Name = "highScoreBtn";
-            highScoreBtn.Size = new Size(121, 29);
+            highScoreBtn.Size = new Size(141, 29);
             highScoreBtn.TabIndex = 3;
             highScoreBtn.Text = "High Scores";
             highScoreBtn.UseVisualStyleBackColor = true;
@@ -131,9 +131,10 @@
             // highScoresLabel
             // 
             highScoresLabel.AutoSize = true;
+            highScoresLabel.Font = new Font("OCR A Extended", 13.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             highScoresLabel.Location = new Point(288, 118);
             highScoresLabel.Name = "highScoresLabel";
-            highScoresLabel.Size = new Size(0, 20);
+            highScoresLabel.Size = new Size(0, 24);
             highScoresLabel.TabIndex = 1;
             // 
             // highScoreReturnBtn

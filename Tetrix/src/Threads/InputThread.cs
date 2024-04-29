@@ -6,13 +6,13 @@ namespace Tetrix.src.Threads
     {
         private Board board;
         private string direction;
-        private string rotation;
+        private bool rotation;
 
         public InputThread(Board board)
         {
             this.board = board;
             direction = "";
-            rotation = "";
+            rotation = false;
         }
 
         protected override void doJob()
@@ -25,10 +25,10 @@ namespace Tetrix.src.Threads
                 direction = "";
             }
 
-            if (!rotation.Equals(""))
+            if (rotation)
             {
-                board.rotateCurrentShape(rotation);
-                rotation = "";
+                board.rotateCurrentShape();
+                rotation = false;
             }
 
         }
@@ -38,7 +38,7 @@ namespace Tetrix.src.Threads
             this.direction = direction;
         }
 
-        public void setRotation(string rotation)
+        public void setRotation(bool rotation)
         {
             this.rotation = rotation;
         }
