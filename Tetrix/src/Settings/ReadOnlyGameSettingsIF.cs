@@ -5,10 +5,11 @@ namespace Tetrix.src.Settings
     public interface ReadOnlyGameSettingsIF
     {
         ShapeBuilderIF getShapeBuilder();
-        int getMinFallingSpeed();
-        int getMaxFallingSpeed();
-        int getRampUp();
+        double getMinFallingSpeed();
+        double getMaxFallingSpeed();
+        double getRampUp();
         int getMaxStackHeight();
         double getPointMultiplier();
+        double getSpeedIncrement();
     }
 }

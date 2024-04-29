@@ -7,7 +7,8 @@ namespace Tetrix.src.Threads
     {
         private ReadOnlyGameSettingsIF gameSettings;
         private Board board;
-        private int currentFallingSpeed;
+        private double currentFallingSpeed;
+        private double speedIncrement;
         private int rampUpCounter;
         private uint[] highScores;
         private Label scoreLabelValue;
@@ -21,21 +22,21 @@ namespace Tetrix.src.Threads
             this.scoreLabelValue = scoreValueLabel;
             updatedScores = false;
             currentFallingSpeed = gameSettings.getMinFallingSpeed();
+            speedIncrement = gameSettings.getSpeedIncrement();
             rampUpCounter = 0;
         }
 
         protected override void doJob()
         {
-            Thread.Sleep(currentFallingSpeed * 1000);
+            Thread.Sleep((int) currentFallingSpeed * 1000);
             lock (board) board.moveCurrentShape("down");
-            rampUpCounter++;
             if (currentFallingSpeed > gameSettings.getMaxFallingSpeed())
             {
                 rampUpCounter++;
                 if (rampUpCounter == gameSettings.getRampUp())
                 {
                     rampUpCounter = 0;
-                    currentFallingSpeed--;
+                    currentFallingSpeed -= speedIncrement;
                 }
             }
         }
