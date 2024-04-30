@@ -117,4 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="tutorialMessage.Text" xml:space="preserve">
+    <value>Welcome to Tetrix!
+
+To play, start a new game by choosing a mode and clicking the start game button.
+Pieces will be created at the top of the screen and begin falling.
+You can move these pieces with the arrow keys or W, S, or D. 
+The pieces can also be rotated with R.
+When pieces hit the bottom of the board, or blocks from another piece, they stop,
+and a new piece is generated.
+The objective is to form complete, horizontal lines of blocks on the board.
+Each completed line will award points to the score.
+Be careful! If the stack of blocks ever reaches the top, you lose!
+Have fun!
+
+Controls:
+R - Rotate Piece
+A/Left - Move Piece Left
+S/Down - Move Piece Down
+D/Right - Move Piece Right</value>
+  </data>
 </root>

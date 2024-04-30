@@ -8,7 +8,6 @@ namespace Tetrix.src.Settings
         private double maxFallingSpeed;
         private double speedIncrement;
         private double rampUp;
-        private int maxStackHeight;
         private double pointMultiplier;
         private ShapeBuilderIF shapeBuilder;
 
@@ -18,7 +17,6 @@ namespace Tetrix.src.Settings
             maxFallingSpeed = 0.5;
             speedIncrement = 0.5;
             rampUp = 30;
-            maxStackHeight = 10;
             pointMultiplier = 1;
             shapeBuilder = new ShapeBuilder();
         }
@@ -26,11 +24,6 @@ namespace Tetrix.src.Settings
         public double getMaxFallingSpeed()
         {
             return maxFallingSpeed;
-        }
-
-        public int getMaxStackHeight()
-        {
-            return maxStackHeight;
         }
 
         public double getMinFallingSpeed()
@@ -71,11 +64,6 @@ namespace Tetrix.src.Settings
         public void setMinFallingSpeed(double minFallingSpeed)
         {
             this.minFallingSpeed = minFallingSpeed;
-        }
-
-        public void setMaxStackHeight(int maxStackHeight)
-        {
-            this.maxStackHeight = maxStackHeight;
         }
 
         public void setRampUp(double rampUp)

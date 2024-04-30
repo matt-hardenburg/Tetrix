@@ -23,6 +23,7 @@ namespace Tetrix
             highScorePanel.Visible = false;
             gamePanel.Visible = false;
             mainMenuPanel.Visible = true;
+            tutorialPanel.Visible = false;
 
             try
             {
@@ -182,6 +183,18 @@ namespace Tetrix
             boardPanel.CreateGraphics().Clear(Color.Black);
             highScorePanel.Visible = false;
             mainMenuPanel.Visible = true;
+        }
+
+        private void tutorialButton_Click(object sender, EventArgs e)
+        {
+            mainMenuPanel.Visible = false;
+            tutorialPanel.Visible = true;
+        }
+
+        private void returnFromTutorialBtn_Click(object sender, EventArgs e)
+        {
+            mainMenuPanel.Visible = true;
+            tutorialPanel.Visible = false;
         }
     }
 }

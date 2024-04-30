@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(App));
             mainMenuPanel = new Panel();
+            tutorialButton = new Button();
             exitBtn = new Button();
             highScoreBtn = new Button();
             startGameBtn = new Button();
@@ -47,13 +49,19 @@
             boardPanel = new Panel();
             returnToMainMenuButton = new Button();
             gameOverLabel = new Label();
+            tutorialPanel = new Panel();
+            tutorialMessage = new Label();
+            returnFromTutorialBtn = new Button();
+            tutorialLabel = new Label();
             mainMenuPanel.SuspendLayout();
             highScorePanel.SuspendLayout();
             gamePanel.SuspendLayout();
+            tutorialPanel.SuspendLayout();
             SuspendLayout();
             // 
             // mainMenuPanel
             // 
+            mainMenuPanel.Controls.Add(tutorialButton);
             mainMenuPanel.Controls.Add(exitBtn);
             mainMenuPanel.Controls.Add(highScoreBtn);
             mainMenuPanel.Controls.Add(startGameBtn);
@@ -64,10 +72,21 @@
             mainMenuPanel.Size = new Size(646, 487);
             mainMenuPanel.TabIndex = 0;
             // 
+            // tutorialButton
+            // 
+            tutorialButton.Font = new Font("OCR A Extended", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tutorialButton.Location = new Point(264, 286);
+            tutorialButton.Name = "tutorialButton";
+            tutorialButton.Size = new Size(109, 29);
+            tutorialButton.TabIndex = 6;
+            tutorialButton.Text = "Tutorial";
+            tutorialButton.UseVisualStyleBackColor = true;
+            tutorialButton.Click += tutorialButton_Click;
+            // 
             // exitBtn
             // 
             exitBtn.Font = new Font("OCR A Extended", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            exitBtn.Location = new Point(273, 321);
+            exitBtn.Location = new Point(273, 344);
             exitBtn.Name = "exitBtn";
             exitBtn.Size = new Size(94, 29);
             exitBtn.TabIndex = 4;
@@ -78,7 +97,7 @@
             // highScoreBtn
             // 
             highScoreBtn.Font = new Font("OCR A Extended", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            highScoreBtn.Location = new Point(248, 247);
+            highScoreBtn.Location = new Point(248, 223);
             highScoreBtn.Name = "highScoreBtn";
             highScoreBtn.Size = new Size(141, 29);
             highScoreBtn.TabIndex = 3;
@@ -89,7 +108,7 @@
             // startGameBtn
             // 
             startGameBtn.Font = new Font("OCR A Extended", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            startGameBtn.Location = new Point(273, 113);
+            startGameBtn.Location = new Point(268, 108);
             startGameBtn.Name = "startGameBtn";
             startGameBtn.Size = new Size(94, 29);
             startGameBtn.TabIndex = 1;
@@ -113,7 +132,7 @@
             // 
             changeModeBox.Font = new Font("OCR A Extended", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             changeModeBox.FormattingEnabled = true;
-            changeModeBox.Location = new Point(238, 183);
+            changeModeBox.Location = new Point(238, 168);
             changeModeBox.Name = "changeModeBox";
             changeModeBox.Size = new Size(151, 27);
             changeModeBox.TabIndex = 5;
@@ -256,12 +275,54 @@
             gameOverLabel.TabIndex = 3;
             gameOverLabel.Text = "GAME OVER";
             // 
+            // tutorialPanel
+            // 
+            tutorialPanel.Controls.Add(tutorialMessage);
+            tutorialPanel.Controls.Add(returnFromTutorialBtn);
+            tutorialPanel.Controls.Add(tutorialLabel);
+            tutorialPanel.Location = new Point(0, 0);
+            tutorialPanel.Name = "tutorialPanel";
+            tutorialPanel.Size = new Size(799, 453);
+            tutorialPanel.TabIndex = 3;
+            // 
+            // tutorialMessage
+            // 
+            tutorialMessage.AutoSize = true;
+            tutorialMessage.Font = new Font("OCR A Extended", 7.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tutorialMessage.Location = new Point(71, 116);
+            tutorialMessage.Name = "tutorialMessage";
+            tutorialMessage.Size = new Size(655, 234);
+            tutorialMessage.TabIndex = 2;
+            tutorialMessage.Text = resources.GetString("tutorialMessage.Text");
+            // 
+            // returnFromTutorialBtn
+            // 
+            returnFromTutorialBtn.Font = new Font("OCR A Extended", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            returnFromTutorialBtn.Location = new Point(324, 379);
+            returnFromTutorialBtn.Name = "returnFromTutorialBtn";
+            returnFromTutorialBtn.Size = new Size(116, 29);
+            returnFromTutorialBtn.TabIndex = 1;
+            returnFromTutorialBtn.Text = "Main Menu";
+            returnFromTutorialBtn.UseVisualStyleBackColor = true;
+            returnFromTutorialBtn.Click += returnFromTutorialBtn_Click;
+            // 
+            // tutorialLabel
+            // 
+            tutorialLabel.AutoSize = true;
+            tutorialLabel.Font = new Font("OCR A Extended", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            tutorialLabel.Location = new Point(304, 47);
+            tutorialLabel.Name = "tutorialLabel";
+            tutorialLabel.Size = new Size(183, 35);
+            tutorialLabel.TabIndex = 0;
+            tutorialLabel.Text = "Tutorial";
+            // 
             // App
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 451);
             Controls.Add(mainMenuPanel);
+            Controls.Add(tutorialPanel);
             Controls.Add(gamePanel);
             Controls.Add(highScorePanel);
             Name = "App";
@@ -273,6 +334,8 @@
             highScorePanel.PerformLayout();
             gamePanel.ResumeLayout(false);
             gamePanel.PerformLayout();
+            tutorialPanel.ResumeLayout(false);
+            tutorialPanel.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -297,5 +360,10 @@
         private Button gameExitButton;
         private Label gameOverLabel;
         private Button returnToMainMenuButton;
+        private Panel tutorialPanel;
+        private Label tutorialLabel;
+        private Label tutorialMessage;
+        private Button returnFromTutorialBtn;
+        private Button tutorialButton;
     }
 }

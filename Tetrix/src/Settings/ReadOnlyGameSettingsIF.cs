@@ -8,7 +8,6 @@ namespace Tetrix.src.Settings
         double getMinFallingSpeed();
         double getMaxFallingSpeed();
         double getRampUp();
-        int getMaxStackHeight();
         double getPointMultiplier();
         double getSpeedIncrement();
     }

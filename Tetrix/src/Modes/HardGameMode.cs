@@ -12,9 +12,8 @@ namespace Tetrix.src.Modes
             GameSettings gameSettings = new GameSettings();
 
             gameSettings.setMinFallingSpeed(0.5);
-            gameSettings.setMaxFallingSpeed(0.1);
+            gameSettings.setMaxFallingSpeed(0.3);
             gameSettings.setSpeedIncrement(0.1);
-            gameSettings.setMaxStackHeight(10);
             gameSettings.setRampUp(15);
             gameSettings.setPointMultiplier(3);
             gameSettings.setShapeBuilder(new NonContiguousShapeBuilder());
