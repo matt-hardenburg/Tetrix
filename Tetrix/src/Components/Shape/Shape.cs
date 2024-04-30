@@ -22,7 +22,7 @@ namespace Tetrix.src.Components.Shape
             this.blocks = blocks;
         }
 
-        public void rotate()
+        public BlockIF[,] getRotatedBlocks()
         {
             int currentRowNumber = blocks.GetLength(0);
             int currentColumnNumber = blocks.GetLength(1);
@@ -30,17 +30,27 @@ namespace Tetrix.src.Components.Shape
             int newRowCnt = 0;
             int newColCnt = 0;
 
-            BlockIF offsetBlock = blocks[currentRowNumber / 2, currentColumnNumber / 2];
-            int gridOffsetX = offsetBlock.getGridLocationX();
-            int gridOffsetY = offsetBlock.getGridLocationY();
+            BlockIF offsetBlock;
+            int gridOffsetX = 0;
+            int gridOffsetY = 0;
+            foreach (BlockIF block in blocks)
+            {
+                if (!block.getBlockType().getBlockTypeName().Equals("null"))
+                {
+                    offsetBlock = block;
+                    gridOffsetX = offsetBlock.getGridLocationX();
+                    gridOffsetY = offsetBlock.getGridLocationY();
+                    break;
+                }
+            }
 
             for (int i = 0; i < currentColumnNumber; i++)
             {
                 newColCnt = 0;
                 for (int j = currentRowNumber - 1; j >= 0; j--)
                 {
-                    newBlocks[newRowCnt, newColCnt] = blocks[j, i];
-
+                   BlockIF oldBlock = blocks[j, i];
+                   newBlocks[newRowCnt, newColCnt] = new BlockContext(oldBlock.getGridLocationX(), oldBlock.getGridLocationY(), oldBlock.getBlockType().getBlockTypeName());
                    if (!blocks[j, i].getBlockType().getBlockTypeName().Equals("null"))
                     {
                         int offsetX = blocks[j, i].getGridLocationX() - gridOffsetX;
@@ -54,16 +64,7 @@ namespace Tetrix.src.Components.Shape
                 newRowCnt++;
             }
 
-            for (int i = 0; i < newBlocks.GetLength(0); i++)
-            {
-                for (int j = 0; j <  newBlocks.GetLength(1); j++)
-                {
-                    System.Diagnostics.Debug.Write(newBlocks[i, j].getBlockType().getBlockTypeName());
-                }
-                System.Diagnostics.Debug.WriteLine("");
-            }
-
-            blocks = newBlocks;
+            return newBlocks;
         }
     }
 }

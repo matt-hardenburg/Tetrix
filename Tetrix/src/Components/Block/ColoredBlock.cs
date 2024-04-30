@@ -16,7 +16,7 @@ namespace Tetrix.src.Components.Block
 
         public string getBlockTypeName()
         {
-            return color.ToString();
+            return color.Name.ToLower();
         }
     }
 }

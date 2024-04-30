@@ -6,6 +6,6 @@ namespace Tetrix.src.Components.Shape
     {
         BlockIF[,] getBlocks();
         void setBlocks(BlockIF[,] blocks);
-        void rotate();
+        BlockIF[,] getRotatedBlocks();
     }
 }

@@ -224,6 +224,20 @@ namespace Tetrix.src.Components
             lock (this)
             {
                 bool moveTrue = true;
+                BlockIF[,] rotatedBlocks = currentShape.getRotatedBlocks();
+                foreach (BlockIF block in rotatedBlocks)
+                {
+                    if (!block.getBlockType().getBlockTypeName().Equals("null"))
+                    {
+                        int currentX = block.getGridLocationX();
+                        int currentY = block.getGridLocationY();
+                        if (!(blockGrid[currentY, currentX].getBlockType().getBlockTypeName().Equals("null") || shapeContainsBlock(currentX, currentY)))
+                        {
+                            moveTrue = false;
+                            break;
+                        }
+                    }
+                }
 
                 if (moveTrue)
                 {
@@ -236,7 +250,7 @@ namespace Tetrix.src.Components
                             blockGrid[currentY, currentX] = new BlockContext(currentX, currentY, "null");
                         }
                     }
-                    currentShape.rotate();
+                    currentShape.setBlocks(rotatedBlocks);
                     foreach (BlockIF block in currentShape.getBlocks())
                     {
                         if (!block.getBlockType().getBlockTypeName().Equals("null"))
