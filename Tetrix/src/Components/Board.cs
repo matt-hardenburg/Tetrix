@@ -231,7 +231,7 @@ namespace Tetrix.src.Components
                     {
                         int currentX = block.getGridLocationX();
                         int currentY = block.getGridLocationY();
-                        if (!(blockGrid[currentY, currentX].getBlockType().getBlockTypeName().Equals("null") || shapeContainsBlock(currentX, currentY)))
+                        if (currentX < 0 || currentX >= blockGrid.GetLength(1) || currentY < 0 || currentY >= blockGrid.GetLength(0) || !(blockGrid[currentY, currentX].getBlockType().getBlockTypeName().Equals("null") || shapeContainsBlock(currentX, currentY)))
                         {
                             moveTrue = false;
                             break;

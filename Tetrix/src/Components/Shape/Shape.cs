@@ -30,20 +30,32 @@ namespace Tetrix.src.Components.Shape
             int newRowCnt = 0;
             int newColCnt = 0;
 
-            BlockIF offsetBlock;
+            BlockIF offsetBlock = blocks[0, 0];
             int gridOffsetX = 0;
             int gridOffsetY = 0;
-            foreach (BlockIF block in blocks)
+            int targetX = currentColumnNumber / 2;
+            int targetY = currentRowNumber / 2;
+            bool firstBlock = true;
+            for (int i = 0; i < currentRowNumber; i++)
             {
-                if (!block.getBlockType().getBlockTypeName().Equals("null"))
+                for (int j = 0; j < currentColumnNumber; j++)
                 {
-                    offsetBlock = block;
-                    gridOffsetX = offsetBlock.getGridLocationX();
-                    gridOffsetY = offsetBlock.getGridLocationY();
-                    break;
+                    if (!blocks[i, j].getBlockType().getBlockTypeName().Equals("null"))
+                    {
+                        if (firstBlock)
+                        {
+                            offsetBlock = blocks[i, j];
+                            firstBlock = false;
+                        }
+                        gridOffsetX = blocks[i, j].getGridLocationX();
+                        gridOffsetY = blocks[i, j].getGridLocationY();
+                        if (Math.Abs(targetY - currentRowNumber) <= gridOffsetX && Math.Abs(targetX - currentColumnNumber) <= gridOffsetY)
+                            offsetBlock = blocks[i, j];
+                    }
                 }
             }
-
+            gridOffsetX = offsetBlock.getGridLocationX();
+            gridOffsetY = offsetBlock.getGridLocationY();
             for (int i = 0; i < currentColumnNumber; i++)
             {
                 newColCnt = 0;
