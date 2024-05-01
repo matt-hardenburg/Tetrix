@@ -30,16 +30,6 @@ namespace Tetrix.src.Components
             return currentScore;
         }
 
-        public Label getScoreValueLabel()
-        {
-            return scoreValueLabel;
-        }
-
-        public void setScoreValueLabel(Label scoreValueLabel)
-        {
-            this.scoreValueLabel = scoreValueLabel;
-        }
-
         public void setCurrentScore(uint currentScore)
         {
             this.currentScore = currentScore;

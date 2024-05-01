@@ -10,7 +10,6 @@ namespace Tetrix.src.Components
         private ShapeIF currentShape;
         private ObserverManager observerManager;
         private Panel boardPanel;
-        private int rotateCounter;
 
         public enum Events : int
         {
@@ -23,7 +22,6 @@ namespace Tetrix.src.Components
         {
             blockGrid = new BlockIF[gridHeight, gridWidth];
             observerManager = new ObserverManager();
-            rotateCounter = 0;
 
             for (int i = 0; i < gridHeight; i++)
                 for (int j = 0; j < gridWidth; j++)

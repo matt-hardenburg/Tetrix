@@ -12,17 +12,6 @@ namespace Tetrix.src.Components
             this.timerValueLabel = timerValueLabel;
         }
 
-
-        public Label getTimerValueLabel()
-        {
-            return timerValueLabel;
-        }
-
-        public void setTimerValueLabel(Label timerValueLabel)
-        {
-            this.timerValueLabel = timerValueLabel;
-        }
-
         public uint getCurrentTime()
         {
             return currentTime;
