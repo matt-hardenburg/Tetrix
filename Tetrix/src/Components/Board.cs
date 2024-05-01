@@ -35,11 +35,18 @@ namespace Tetrix.src.Components
         {
             lock (this)
             {
-                Graphics g = boardPanel.CreateGraphics();
+                Graphics g  = null;
+                if (boardPanel.InvokeRequired)
+                {
+                    boardPanel.Invoke((MethodInvoker)(() => { g = boardPanel.CreateGraphics(); }));
+                }
                 int blockHeight = boardPanel.Height / blockGrid.GetLength(0);
                 int blockWidth = boardPanel.Width / blockGrid.GetLength(1);
                 foreach (BlockIF block in blockGrid)
-                    block.draw(g, blockHeight, blockWidth);
+                {
+                    if (g != null)
+                        block.draw(g, blockHeight, blockWidth);
+                }
             }
         }
 

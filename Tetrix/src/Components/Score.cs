@@ -21,12 +21,8 @@ namespace Tetrix.src.Components
         {
             if (scoreValueLabel.InvokeRequired)
             {
-                if (!Terminator.isShutDownRequested())
-                {
-                    scoreValueLabel.Invoke((MethodInvoker)(() => { scoreValueLabel.Text = currentScore.ToString(); }));
-                }
+                scoreValueLabel.Invoke((MethodInvoker)(() => { scoreValueLabel.Text = currentScore.ToString(); }));
             }
-            System.Diagnostics.Debug.WriteLine("score");
         }
 
         public uint getCurrentScore()

@@ -7,12 +7,12 @@ namespace Tetrix
     public partial class App : Form
     {
         GameDirectorAC gameDirector;
-        Board board;
         List<Thread> threads;
         List<InputThread> inputThreads;
         src.Game game;
         uint[] currentHighScores;
         bool highScoresRetreived;
+        Thread executionThread;
 
         public App()
         {
@@ -44,7 +44,9 @@ namespace Tetrix
 
             gameDirector = new NormalGameDirector(scoreValueLabel, timerValueLabel, boardPanel);
         }
-
+        //Add display exit function
+        //Windows forms exit button
+        //Keep join
         public List<Thread> getThreads()
         {
             return threads;
@@ -168,6 +170,7 @@ namespace Tetrix
             boardPanel.CreateGraphics().Clear(Color.Black);
             highScorePanel.Visible = false;
             mainMenuPanel.Visible = true;
+            gamePanel.Visible = false;
         }
 
         private void tutorialButton_Click(object sender, EventArgs e)

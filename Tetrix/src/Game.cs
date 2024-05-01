@@ -81,13 +81,12 @@ namespace Tetrix.src
         public void exit()
         {
             Terminator.doShutDown();
-            foreach (Thread thread in threads) thread.Join();
+            //foreach (Thread thread in threads) thread.Join();
         }
 
         public void draw()
         {
             foreach (GameElementIF gameElement in gameComponents) if (gameElement is not Game) gameElement.draw();
-            System.Diagnostics.Debug.WriteLine("1");
         }
 
         public List<GameElementIF> getGameComponents()

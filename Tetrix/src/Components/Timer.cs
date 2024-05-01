@@ -37,12 +37,8 @@ namespace Tetrix.src.Components
         {
             if (timerValueLabel.InvokeRequired)
             {
-                if (!Terminator.isShutDownRequested())
-                {
-                    timerValueLabel.Invoke((MethodInvoker)(() => { timerValueLabel.Text = currentTime.ToString(); }));
-                }
+                timerValueLabel.Invoke((MethodInvoker)(() => { timerValueLabel.Text = currentTime.ToString(); }));
             }
-            System.Diagnostics.Debug.WriteLine("tiemr");
         }
     }
 }

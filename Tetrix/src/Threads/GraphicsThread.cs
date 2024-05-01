@@ -19,24 +19,24 @@ namespace Tetrix.src.Threads
 
         protected override void doJob()
         {
-            Thread.Sleep(50);
+            //Thread.Sleep(50);
             game.draw();
         }
 
         protected override void shutDown()
         {
-            //Fix here 
-            System.Diagnostics.Debug.WriteLine("there");
             if (boardPanel.InvokeRequired)
             {
-                System.Diagnostics.Debug.WriteLine("yay");
-                boardPanel.Invoke((System.Action) (() => { boardPanel.Visible = false; }));
+                boardPanel.Invoke((MethodInvoker) (() => { boardPanel.Visible = false; }));
             }
-
-            System.Diagnostics.Debug.WriteLine("yay2");
-            gameOverLabel.Invoke((MethodInvoker)(() => { gameOverLabel.Visible = true; }));
-            returnToMainMenuButton.Invoke((MethodInvoker)(() => { returnToMainMenuButton.Visible = true; }));
-            System.Diagnostics.Debug.WriteLine("here");
+            if (gameOverLabel.InvokeRequired)
+            {
+                gameOverLabel.Invoke((MethodInvoker)(() => { gameOverLabel.Visible = true; }));
+            }
+            if (returnToMainMenuButton.InvokeRequired)
+            {
+                returnToMainMenuButton.Invoke((MethodInvoker)(() => { returnToMainMenuButton.Visible = true; }));
+            }
             base.shutDown();
         }
     }

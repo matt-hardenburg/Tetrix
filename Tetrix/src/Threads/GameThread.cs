@@ -45,7 +45,11 @@ namespace Tetrix.src.Threads
         protected override void shutDown()
         {
             //get score from label
-            uint newScore = uint.Parse(scoreLabelValue.Text);
+            uint newScore = 0;
+            if (scoreLabelValue.InvokeRequired)
+            {
+                scoreLabelValue.Invoke((MethodInvoker)(() => { newScore = uint.Parse(scoreLabelValue.Text); }));
+            }
 
             //cascading add if greater than existing
             for (int i = 0; i < highScores.Length; i++)
