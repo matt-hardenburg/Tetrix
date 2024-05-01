@@ -1,4 +1,6 @@
-﻿namespace Tetrix.src.Threads
+﻿using System.Xml.Linq;
+
+namespace Tetrix.src.Threads
 {
     public class GraphicsThread : ThreadAC
     {
@@ -7,12 +9,12 @@
         Label gameOverLabel;
         Button returnToMainMenuButton;
 
-        public GraphicsThread(Game game, Panel boardPanel, Label gameOverLabel, Button returnButton)
+        public GraphicsThread(Game game, Panel boardPanel, Label gameOverLabel, Button returnToMainMenuButton)
         {
             this.game = game;
             this.boardPanel = boardPanel;
             this.gameOverLabel = gameOverLabel;
-            this.returnToMainMenuButton = returnButton;
+            this.returnToMainMenuButton = returnToMainMenuButton;
         }
 
         protected override void doJob()
@@ -23,14 +25,18 @@
 
         protected override void shutDown()
         {
-            if (Terminator.isNormalShutdown())
+            //Fix here 
+            System.Diagnostics.Debug.WriteLine("there");
+            if (boardPanel.InvokeRequired)
             {
-                boardPanel.Invoke((MethodInvoker)(() => { boardPanel.Visible = false; }));
-                gameOverLabel.Invoke((MethodInvoker)(() => { gameOverLabel.Visible = true; }));
-                returnToMainMenuButton.Invoke((MethodInvoker)(() => { returnToMainMenuButton.Visible = true; }));
+                System.Diagnostics.Debug.WriteLine("yay");
+                boardPanel.Invoke((System.Action) (() => { boardPanel.Visible = false; }));
             }
-            else returnToMainMenuButton.Invoke((MethodInvoker)(() => { returnToMainMenuButton.PerformClick(); }));
 
+            System.Diagnostics.Debug.WriteLine("yay2");
+            gameOverLabel.Invoke((MethodInvoker)(() => { gameOverLabel.Visible = true; }));
+            returnToMainMenuButton.Invoke((MethodInvoker)(() => { returnToMainMenuButton.Visible = true; }));
+            System.Diagnostics.Debug.WriteLine("here");
             base.shutDown();
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace Tetrix.src.Components
+﻿using Tetrix.src.Threads;
+
+namespace Tetrix.src.Components
 {
     public class Timer : GameElementIF
     {
@@ -33,8 +35,14 @@
 
         public void draw()
         {
-            if (timerValueLabel.InvokeRequired) 
-                timerValueLabel.Invoke((MethodInvoker) (() => { timerValueLabel.Text = currentTime.ToString(); }));
+            if (timerValueLabel.InvokeRequired)
+            {
+                if (!Terminator.isShutDownRequested())
+                {
+                    timerValueLabel.Invoke((MethodInvoker)(() => { timerValueLabel.Text = currentTime.ToString(); }));
+                }
+            }
+            System.Diagnostics.Debug.WriteLine("tiemr");
         }
     }
 }

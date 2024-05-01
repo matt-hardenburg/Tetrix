@@ -4,6 +4,7 @@ using Tetrix.src.Modes;
 using Tetrix.src.Settings;
 using Tetrix.src.Observer;
 using Tetrix.src.Threads;
+using System.ComponentModel;
 
 namespace Tetrix.src
 {
@@ -12,6 +13,7 @@ namespace Tetrix.src
         private GameModeAC gameMode;
         private List<GameElementIF> gameComponents;
         private ReadOnlyGameSettingsIF gameSettings;
+        private List<Thread> threads;
 
         //Lots of casting between game components, should eliminate
 
@@ -32,22 +34,23 @@ namespace Tetrix.src
             gameComponents.Add(this);
             gameSettings = new GameSettings();
             this.gameMode.setMode();
+            threads = new List<Thread>();
         }
 
-        public List<Thread> start(uint[] highScores, Label scoreValueLabel, Panel boardPanel, Label gameOverLabel, Button returnButton )
+        public List<InputThread> start(uint[] highScores, Label scoreValueLabel, Panel boardPanel, Label gameOverLabel, Button returnButton )
         {
-            List<Thread> threads = new List<Thread>();
-            
-            //thread creation
+            Terminator.resetShutDown();
+            List<InputThread> inputThreads = new List<InputThread>();
             foreach (GameElementIF gameComponent in gameComponents)
             {
                 Thread thread;
                 if (gameComponent is Board)
                 {
-                    //TODO: input functionality untested
-                    /*thread = new Thread(new ThreadStart(new InputThread((Board)gameComponent).run));
-                    thread.Name = "Input";
-                    threads.Add(thread);*/
+                    InputThread inputThread = new InputThread((Board)gameComponent);
+                    Thread iThread = new Thread(new ThreadStart(inputThread.run));
+                    iThread.Name = "Input";
+                    threads.Add(iThread);
+                    inputThreads.Add(inputThread);
 
                     thread = new Thread(new ThreadStart(new GameThread(getGameSettings(), (Board)gameComponent, highScores, scoreValueLabel).run));
                     thread.Name = "Game";
@@ -70,22 +73,21 @@ namespace Tetrix.src
                 }
             }
 
-            //foreach (Thread thread in threads) thread.Start();
+            foreach (Thread thread in threads) thread.Start();
 
-            return threads;
+            return inputThreads;
         }
 
-        public void exit(List<Thread>? threads, bool normalShutdown)
+        public void exit()
         {
-            if (threads is null) return;
-            Terminator.doShutDown(normalShutdown);
-            Thread.Yield();
-            foreach (Thread thread in threads) thread.Join(); //TODO: hard stops when graphic thread joins
+            Terminator.doShutDown();
+            foreach (Thread thread in threads) thread.Join();
         }
 
         public void draw()
         {
             foreach (GameElementIF gameElement in gameComponents) if (gameElement is not Game) gameElement.draw();
+            System.Diagnostics.Debug.WriteLine("1");
         }
 
         public List<GameElementIF> getGameComponents()
@@ -103,8 +105,7 @@ namespace Tetrix.src
             switch (_event)
             {
                 case Board.Events.TopOfScreen:
-                    App? app = Application.OpenForms["App"] as App;
-                    exit(app?.getThreads(), true);
+                    this.exit();
                     break;
                 case Board.Events.PieceStopped:
                     foreach (GameElementIF element in gameComponents)

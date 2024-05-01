@@ -9,7 +9,7 @@ namespace Tetrix
         GameDirectorAC gameDirector;
         Board board;
         List<Thread> threads;
-        InputThread inputThread;
+        List<InputThread> inputThreads;
         src.Game game;
         uint[] currentHighScores;
         bool highScoresRetreived;
@@ -90,38 +90,23 @@ namespace Tetrix
 
         private void startGameBtn_Click(object sender, EventArgs e)
         {
-            mainMenuPanel.Visible = false;
             string currentMode;
 
-            if (changeModeBox.SelectedItem == null ||
-                changeModeBox.SelectedItem.ToString().Equals("")) currentMode = "Normal";
+            if (changeModeBox.SelectedItem == null || changeModeBox.SelectedItem.ToString().Equals("")) currentMode = "Normal";
             else currentMode = changeModeBox.SelectedItem.ToString();
             game = gameDirector.build(currentMode);
 
-            foreach (GameElementIF component in game.getGameComponents()) if (component is Board b) board = b;
+            inputThreads = game.start(currentHighScores, scoreValueLabel, boardPanel, gameOverLabel, returnToMainMenuButton);
 
-            threads = game.start(currentHighScores, scoreValueLabel, boardPanel, gameOverLabel, returnToMainMenuButton);
-            this.inputThread = new InputThread(board);
-            Thread inputThread = new Thread(new ThreadStart(this.inputThread.run));
-            inputThread.Name = "Input";
-            threads.Add(inputThread);
-
-            this.SuspendLayout();
             mainMenuPanel.Visible = false;
             highScorePanel.Visible = false;
             gamePanel.Visible = true;
-            this.ResumeLayout();
             gameExitButton.Visible = true;
-
-            foreach (Thread thread in threads) thread.Start();
         }
 
         private void gameExitButton_Click(object sender, EventArgs e)
         {
-            game.exit(threads, false);
-            highScorePanel.Visible = false;
-            gamePanel.Visible = false;
-            mainMenuPanel.Visible = true;
+            game.exit();
             gameExitButton.Visible = false;
         }
 
@@ -129,19 +114,19 @@ namespace Tetrix
         {
             if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S)
             {
-                inputThread.setDirection("down");
+                foreach (InputThread inputThread in inputThreads) inputThread.setDirection("down");
             }
             else if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
             {
-                inputThread.setDirection("left");
+                foreach (InputThread inputThread in inputThreads) inputThread.setDirection("left");
             }
             else if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
             {
-                inputThread.setDirection("right");
+                foreach (InputThread inputThread in inputThreads) inputThread.setDirection("right");
             }
             else if (e.KeyCode == Keys.R)
             {
-                inputThread.setRotation(true);
+                foreach (InputThread inputThread in inputThreads) inputThread.setRotation(true);
             }
         }
 
@@ -192,6 +177,12 @@ namespace Tetrix
         }
 
         private void returnFromTutorialBtn_Click(object sender, EventArgs e)
+        {
+            mainMenuPanel.Visible = true;
+            tutorialPanel.Visible = false;
+        }
+
+        private void gameOver(object sender, EventArgs e)
         {
             mainMenuPanel.Visible = true;
             tutorialPanel.Visible = false;

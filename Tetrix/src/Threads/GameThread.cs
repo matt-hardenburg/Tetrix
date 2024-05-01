@@ -58,7 +58,6 @@ namespace Tetrix.src.Threads
                     newScore = temp;
                 }
             }
-
             //write to file and continue shutdown
             writeToFile("Data\\highscores.txt");
             base.shutDown();

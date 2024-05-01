@@ -3,22 +3,20 @@
     public class Terminator
     {
         private static bool shutDownRequested = false;
-        private static bool normalShutDown = true;
 
         public static bool isShutDownRequested()
         {
             return shutDownRequested;
         }
 
-        public static bool isNormalShutdown()
+        public static void doShutDown()
         {
-            return normalShutDown;
+            shutDownRequested = true;
         }
 
-        public static void doShutDown(bool normal)
+        public static void resetShutDown()
         {
-            normalShutDown = normal;
-            shutDownRequested = true;
+            shutDownRequested = false;
         }
     }
 }

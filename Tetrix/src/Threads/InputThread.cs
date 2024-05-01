@@ -17,8 +17,6 @@ namespace Tetrix.src.Threads
 
         protected override void doJob()
         {
-            //System.Diagnostics.Debug.WriteLine("Direction: " + direction + "\n");
-            //System.Diagnostics.Debug.WriteLine("Rotation: " + rotation + "\n");
             if (!direction.Equals(""))
             {
                 board.moveCurrentShape(direction);

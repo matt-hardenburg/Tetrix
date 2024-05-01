@@ -325,6 +325,7 @@
             Controls.Add(tutorialPanel);
             Controls.Add(gamePanel);
             Controls.Add(highScorePanel);
+            DoubleBuffered = true;
             Name = "App";
             Text = "Tetrix";
             KeyDown += App_KeyDown;
