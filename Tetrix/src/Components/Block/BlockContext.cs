@@ -1,4 +1,5 @@
-﻿namespace Tetrix.src.Components.Block
+﻿
+namespace Tetrix.src.Components.Block
 {
     public class BlockContext : BlockIF
     {
@@ -15,11 +16,6 @@
             if (blockFactory == null) blockFactory = new BlockFactory();
 
             this.blockType = blockFactory.getBlockType(blockType);
-        }
-
-        void GameElementIF.draw()
-        {
-            throw new NotImplementedException();
         }
 
         public int getGridLocationX()
@@ -40,6 +36,16 @@
         public void setGridLocationY(int y)
         {
             gridLocationY = y;
+        }
+
+        public BlockTypeIF getBlockType()
+        {
+            return blockType;
+        }
+
+        public void draw(Graphics graphics, int height, int width)
+        {
+            blockType.draw(graphics, gridLocationX * width, gridLocationY * height, height, width);
         }
     }
 }

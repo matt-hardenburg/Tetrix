@@ -1,18 +1,33 @@
+using Tetrix.src.Components;
 using Tetrix.src.Director;
+using Tetrix.src.Threads;
 
 namespace Tetrix
 {
     public partial class App : Form
     {
         GameDirectorAC gameDirector;
+        List<Thread> threads;
+        List<InputThread> inputThreads;
+        src.Game game;
+        uint[] currentHighScores;
+        bool highScoresRetreived;
+        Thread executionThread;
+
         public App()
         {
             InitializeComponent();
+            highScoresRetreived = parseHighScores("Data\\highscores.txt");
+            this.DoubleBuffered = true;
+            this.KeyPreview = true;
             highScorePanel.Visible = false;
+            gamePanel.Visible = false;
+            mainMenuPanel.Visible = true;
+            tutorialPanel.Visible = false;
+
             try
             {
-                //Change to relative path
-                StreamReader scoreReader = new StreamReader("Data/modes.txt");
+                StreamReader scoreReader = new StreamReader("Data\\modes.txt");
                 string mode;
                 while ((mode = scoreReader.ReadLine()) != null)
                 {
@@ -24,7 +39,15 @@ namespace Tetrix
                 changeModeBox.Items.Add("Normal");
                 changeModeBox.Items.Add("Hard");
             }
-            gameDirector = new NormalGameDirector();
+
+            changeModeBox.SelectedIndex = 0;
+
+            gameDirector = new NormalGameDirector(scoreValueLabel, timerValueLabel, boardPanel);
+        }
+
+        public List<Thread> getThreads()
+        {
+            return threads;
         }
 
         private void exitBtn_Click(object sender, EventArgs e)
@@ -34,26 +57,26 @@ namespace Tetrix
 
         private void highScoreBtn_Click(object sender, EventArgs e)
         {
-            try
-            {
-                //Change to relative path
-                StreamReader scoreReader = new StreamReader("Data/highscores.txt");
-                string score;
-                this.SuspendLayout();
-                mainMenuPanel.Visible = false;
-                highScorePanel.Visible = true;
-                this.ResumeLayout();
-                int scoreCounter = 1;
-                highScoresLabel.Text = "";
-                while ((score = scoreReader.ReadLine()) != null && scoreCounter <= 5)
-                {
-                    highScoresLabel.Text += scoreCounter + ". " + score + "\n";
-                    scoreCounter++;
-                }
-            }
-            catch (IOException)
+            highScoresRetreived = parseHighScores("Data\\highscores.txt");
+
+            this.SuspendLayout();
+            mainMenuPanel.Visible = false;
+            highScorePanel.Visible = true;
+            this.ResumeLayout();
+
+            int scoreCounter = 1;
+            highScoresLabel.Text = "";
+
+            if (!highScoresRetreived)
             {
                 highScoresLabel.Text = "Unable to retrieve scores.";
+                return;
+            }
+
+            foreach (uint score in currentHighScores)
+            {
+                highScoresLabel.Text += scoreCounter + ". " + score.ToString() + "\n";
+                scoreCounter++;
             }
         }
 
@@ -63,24 +86,107 @@ namespace Tetrix
             mainMenuPanel.Visible = true;
             highScorePanel.Visible = false;
             this.ResumeLayout();
-            mainMenuPanel.BringToFront();
         }
 
         private void startGameBtn_Click(object sender, EventArgs e)
         {
+            string currentMode;
+
+            if (changeModeBox.SelectedItem == null || changeModeBox.SelectedItem.ToString().Equals("")) currentMode = "Normal";
+            else currentMode = changeModeBox.SelectedItem.ToString();
+            game = gameDirector.build(currentMode);
+
+            inputThreads = game.start(currentHighScores, boardPanel, gameOverLabel, returnToMainMenuButton);
+
             mainMenuPanel.Visible = false;
-            string currentMode = changeModeBox.SelectedItem.ToString();
-            if (currentMode == null || currentMode.Equals(""))
-                currentMode = "Normal";
-            src.Game game = gameDirector.build(currentMode);
-            game.start();
-            BufferedGraphicsContext currentContext;
-            BufferedGraphics myBuffer;
-            // Gets a reference to the current BufferedGraphicsContext
-            currentContext = BufferedGraphicsManager.Current;
-            // Creates a BufferedGraphics instance associated with Form1, and with
-            // dimensions the same size as the drawing surface of Form1.
-            myBuffer = currentContext.Allocate(this.CreateGraphics(), this.DisplayRectangle);
+            highScorePanel.Visible = false;
+            gamePanel.Visible = true;
+            gameExitButton.Visible = true;
+        }
+
+        private void gameExitButton_Click(object sender, EventArgs e)
+        {
+            game.exit();
+            gameExitButton.Visible = false;
+        }
+
+        private void App_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Down || e.KeyCode == Keys.S)
+            {
+                foreach (InputThread inputThread in inputThreads) inputThread.setDirection("down");
+            }
+            else if (e.KeyCode == Keys.Left || e.KeyCode == Keys.A)
+            {
+                foreach (InputThread inputThread in inputThreads) inputThread.setDirection("left");
+            }
+            else if (e.KeyCode == Keys.Right || e.KeyCode == Keys.D)
+            {
+                foreach (InputThread inputThread in inputThreads) inputThread.setDirection("right");
+            }
+            else if (e.KeyCode == Keys.R)
+            {
+                foreach (InputThread inputThread in inputThreads) inputThread.setRotation(true);
+            }
+        }
+
+        private bool parseHighScores(string path)
+        {
+            currentHighScores = new uint[5];
+            int scoreCounter = 0;
+
+            try
+            {
+                StreamReader scoreReader = new StreamReader(path);
+                string score;
+
+
+                while ((score = scoreReader.ReadLine()) != null && scoreCounter < 5)
+                {
+                    currentHighScores[scoreCounter] = uint.Parse(score);
+                    scoreCounter++;
+                }
+
+                scoreReader.Close();
+                return true;
+            }
+            catch (IOException)
+            {
+                Console.Error.WriteLine("Unable to retrieve scores.");
+                return false;
+            }
+        }
+
+        private void returnToMainMenuButton_Click(object sender, EventArgs e)
+        {
+            returnToMainMenuButton.Visible = false;
+            gameOverLabel.Visible = false;
+            gameExitButton.Visible = false;
+            boardPanel.Visible = true;
+            scoreValueLabel.Text = "";
+            timerValueLabel.Text = "";
+            boardPanel.CreateGraphics().Clear(Color.Black);
+            highScorePanel.Visible = false;
+            mainMenuPanel.Visible = true;
+            gamePanel.Visible = false;
+        }
+
+        private void tutorialButton_Click(object sender, EventArgs e)
+        {
+            mainMenuPanel.Visible = false;
+            tutorialPanel.Visible = true;
+        }
+
+        private void returnFromTutorialBtn_Click(object sender, EventArgs e)
+        {
+            mainMenuPanel.Visible = true;
+            tutorialPanel.Visible = false;
+        }
+
+        private void gameOver(object sender, EventArgs e)
+        {
+            mainMenuPanel.Visible = true;
+            tutorialPanel.Visible = false;
         }
     }
 }

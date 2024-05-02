@@ -8,7 +8,8 @@ namespace Tetrix.src.Components
     {
         private BlockIF[,] blockGrid;
         private ShapeIF currentShape;
-        private ObservableIF observerManager;
+        private ObserverManager observerManager;
+        private Panel boardPanel;
 
         public enum Events : int
         {
@@ -17,41 +18,50 @@ namespace Tetrix.src.Components
             TopOfScreen = 3
         }
 
-        public Board(int gridHeight, int gridWidth)
+        public Board(int gridHeight, int gridWidth, Panel boardPanel)
         {
             blockGrid = new BlockIF[gridHeight, gridWidth];
             observerManager = new ObserverManager();
 
             for (int i = 0; i < gridHeight; i++)
-            {
                 for (int j = 0; j < gridWidth; j++)
-                {
                     blockGrid[i, j] = new BlockContext(j, i, "null");
-                }
-            }
+            this.boardPanel = boardPanel;
         }
 
         void GameElementIF.draw()
         {
             lock (this)
             {
-                throw new NotImplementedException();
+                Graphics g  = null;
+                if (boardPanel.InvokeRequired)
+                {
+                    boardPanel.Invoke((MethodInvoker)(() => { g = boardPanel.CreateGraphics(); }));
+                }
+                int blockHeight = boardPanel.Height / blockGrid.GetLength(0);
+                int blockWidth = boardPanel.Width / blockGrid.GetLength(1);
+                foreach (BlockIF block in blockGrid)
+                {
+                    if (g != null)
+                        block.draw(g, blockHeight, blockWidth);
+                }
             }
         }
 
         public void addShapeToBoard(ShapeIF shape)
         {
-            currentShape = shape;
-            bool firstBlock = true;
-            int firstX = 0;
-            int firstY = 0;
-            int offsetX = 0;
-            int offsetY = 0;
             lock (this)
             {
+                currentShape = shape;
+                bool firstBlock = true;
+                int firstX = 0;
+                int firstY = 0;
+                int offsetX = 0;
+                int offsetY = 0;
+
                 foreach (BlockIF block in currentShape.getBlocks())
                 {
-                    if (!(block is NullBlock))
+                    if (!block.getBlockType().getBlockTypeName().Equals("null"))
                     {
                         if (firstBlock)
                         {
@@ -59,11 +69,13 @@ namespace Tetrix.src.Components
                             firstY = block.getGridLocationY();
                             firstBlock = false;
                         }
+
                         offsetX = block.getGridLocationX() - firstX;
                         offsetY = block.getGridLocationY() - firstY;
-                        int gridX = blockGrid.GetLength(1) / 2 + offsetX;
+                        int gridX = (blockGrid.GetLength(1) / 2) + offsetX;
                         int gridY = offsetY;
-                        if (blockGrid[gridY, gridX] is NullBlock)
+
+                        if (blockGrid[gridY, gridX].getBlockType().getBlockTypeName().Equals("null"))
                         {
                             block.setGridLocationX(gridX);
                             block.setGridLocationY(gridY);
@@ -84,19 +96,23 @@ namespace Tetrix.src.Components
             bool moveTrue = true;
             lock (this)
             {
+                if (currentShape is null) return;
+
                 if (direction.Equals("down"))
                 {
                     BlockIF[,] shapeBlocks = currentShape.getBlocks();
-                    for (int i = shapeBlocks.GetLength(0); i >= 0; i--)
+                    for (int i = shapeBlocks.GetLength(0) - 1; i >= 0; i--)
                     {
-                        for (int j = shapeBlocks.GetLength(1); j >= 0; j--)
+                        for (int j = shapeBlocks.GetLength(1) - 1; j >= 0; j--)
                         {
                             BlockIF block = shapeBlocks[i, j];
-                            if (!(block is NullBlock))
+                            if (!block.getBlockType().getBlockTypeName().Equals("null"))
                             {
                                 int currentX = block.getGridLocationX();
                                 int currentY = block.getGridLocationY();
-                                if (!(currentY < blockGrid.GetLength(0) - 1 && (blockGrid[currentY + 1, currentX] is NullBlock || shapeContainsBlock(currentY + 1, currentX))))
+                                if (!(currentY < blockGrid.GetLength(0) - 1 && 
+                                    (blockGrid[currentY + 1, currentX].getBlockType().getBlockTypeName().Equals("null") || 
+                                    shapeContainsBlock(currentX, currentY + 1))))
                                 {
                                     moveTrue = false;
                                     break;
@@ -107,12 +123,12 @@ namespace Tetrix.src.Components
 
                     if (moveTrue)
                     {
-                        for (int i = shapeBlocks.GetLength(0); i >= 0; i--)
+                        for (int i = shapeBlocks.GetLength(0) - 1; i >= 0; i--)
                         {
-                            for (int j = shapeBlocks.GetLength(1); j >= 0; j--)
+                            for (int j = shapeBlocks.GetLength(1) - 1; j >= 0; j--)
                             {
                                 BlockIF block = shapeBlocks[i, j];
-                                if (!(block is NullBlock))
+                                if (!block.getBlockType().getBlockTypeName().Equals("null"))
                                 {
                                     int currentX = block.getGridLocationX();
                                     int currentY = block.getGridLocationY();
@@ -123,24 +139,23 @@ namespace Tetrix.src.Components
                             }
                         }
                     }
-                    else
-                    {
-                        notifyObservers(Events.PieceStopped);
-                    }
+                    else notifyObservers(Events.PieceStopped);
                 }
                 else if (direction.Equals("left"))
                 {
                     BlockIF[,] shapeBlocks = currentShape.getBlocks();
-                    for (int i = shapeBlocks.GetLength(0); i >= 0; i--)
+                    for (int i = shapeBlocks.GetLength(0) - 1; i >= 0; i--)
                     {
-                        for (int j = shapeBlocks.GetLength(1); j >= 0; j--)
+                        for (int j = shapeBlocks.GetLength(1) - 1; j >= 0; j--)
                         {
                             BlockIF block = shapeBlocks[i, j];
-                            if (!(block is NullBlock))
+                            if (!block.getBlockType().getBlockTypeName().Equals("null"))
                             {
                                 int currentX = block.getGridLocationX();
                                 int currentY = block.getGridLocationY();
-                                if (!(currentX > 1 && (blockGrid[currentY, currentX - 1] is NullBlock || shapeContainsBlock(currentY, currentX - 1))))
+                                if (!(currentX > 0 && 
+                                    (blockGrid[currentY, currentX - 1].getBlockType().getBlockTypeName().Equals("null") || 
+                                    shapeContainsBlock(currentX - 1, currentY))))
                                 {
                                     moveTrue = false;
                                     break;
@@ -151,12 +166,12 @@ namespace Tetrix.src.Components
 
                     if (moveTrue)
                     {
-                        for (int i = shapeBlocks.GetLength(0); i >= 0; i--)
+                        for (int i = 0; i < shapeBlocks.GetLength(0); i++)
                         {
-                            for (int j = shapeBlocks.GetLength(1); j >= 0; j--)
+                            for (int j = 0; j < shapeBlocks.GetLength(1); j++)
                             {
                                 BlockIF block = shapeBlocks[i, j];
-                                if (!(block is NullBlock))
+                                if (!block.getBlockType().getBlockTypeName().Equals("null"))
                                 {
                                     int currentX = block.getGridLocationX();
                                     int currentY = block.getGridLocationY();
@@ -171,16 +186,18 @@ namespace Tetrix.src.Components
                 else if (direction.Equals("right"))
                 {
                     BlockIF[,] shapeBlocks = currentShape.getBlocks();
-                    for (int i = shapeBlocks.GetLength(0); i >= 0; i--)
+                    for (int i = shapeBlocks.GetLength(0) - 1; i >= 0; i--)
                     {
-                        for (int j = shapeBlocks.GetLength(1); j >= 0; j--)
+                        for (int j = shapeBlocks.GetLength(1) - 1; j >= 0; j--)
                         {
                             BlockIF block = shapeBlocks[i, j];
-                            if (!(block is NullBlock))
+                            if (!block.getBlockType().getBlockTypeName().Equals("null"))
                             {
                                 int currentX = block.getGridLocationX();
                                 int currentY = block.getGridLocationY();
-                                if (!(currentX < blockGrid.GetLength(1) - 1 && (blockGrid[currentY, currentX + 1] is NullBlock || shapeContainsBlock(currentY, currentX + 1))))
+                                if (!(currentX < blockGrid.GetLength(1) - 1 && 
+                                    (blockGrid[currentY, currentX + 1].getBlockType().getBlockTypeName().Equals("null") || 
+                                    shapeContainsBlock(currentX + 1, currentY))))
                                 {
                                     moveTrue = false;
                                     break;
@@ -191,12 +208,12 @@ namespace Tetrix.src.Components
 
                     if (moveTrue)
                     {
-                        for (int i = shapeBlocks.GetLength(0); i >= 0; i--)
+                        for (int i = shapeBlocks.GetLength(0) - 1; i >= 0; i--)
                         {
-                            for (int j = shapeBlocks.GetLength(1); j >= 0; j--)
+                            for (int j = shapeBlocks.GetLength(1) - 1; j >= 0; j--)
                             {
                                 BlockIF block = shapeBlocks[i, j];
-                                if (!(block is NullBlock))
+                                if (!block.getBlockType().getBlockTypeName().Equals("null"))
                                 {
                                     int currentX = block.getGridLocationX();
                                     int currentY = block.getGridLocationY();
@@ -208,63 +225,115 @@ namespace Tetrix.src.Components
                         }
                     }
                 }
+
+                clearedFilledLines();
+                checkBoardStatus();
+            }
+        }
+
+        public void rotateCurrentShape()
+        {
+            lock (this)
+            {
+                bool moveTrue = true;
+                BlockIF[,] rotatedBlocks = currentShape.getRotatedBlocks();
+
+                foreach (BlockIF block in rotatedBlocks)
+                {
+                    if (!block.getBlockType().getBlockTypeName().Equals("null"))
+                    {
+                        int currentX = block.getGridLocationX();
+                        int currentY = block.getGridLocationY();
+
+                        if (currentX < 0 || currentX >= blockGrid.GetLength(1) || currentY < 0 || currentY >= blockGrid.GetLength(0) || 
+                            !(blockGrid[currentY, currentX].getBlockType().getBlockTypeName().Equals("null") || shapeContainsBlock(currentX, currentY)))
+                        {
+                            moveTrue = false;
+                            break;
+                        }
+                    }
+                }
+
+                if (moveTrue)
+                {
+                    foreach (BlockIF block in currentShape.getBlocks())
+                    {
+                        if (!block.getBlockType().getBlockTypeName().Equals("null"))
+                        {
+                            int currentX = block.getGridLocationX();
+                            int currentY = block.getGridLocationY();
+                            blockGrid[currentY, currentX] = new BlockContext(currentX, currentY, "null");
+                        }
+                    }
+
+                    currentShape.setBlocks(rotatedBlocks);
+
+                    foreach (BlockIF block in currentShape.getBlocks())
+                    {
+                        if (!block.getBlockType().getBlockTypeName().Equals("null"))
+                        {
+                            int currentX = block.getGridLocationX();
+                            int currentY = block.getGridLocationY();
+                            blockGrid[currentY, currentX] = block;
+                        }
+                    }
+                }
+
+                clearedFilledLines();
+                checkBoardStatus();
             }
         }
 
         public void clearedFilledLines()
         {
-            lock (this)
+            for (int i = 0; i < blockGrid.GetLength(0); i++)
             {
-                for (int i = 0; i < blockGrid.GetLength(0); i++)
+                bool rowClear = true;
+                for (int j = 0; j < blockGrid.GetLength(1); j++)
                 {
-                    bool rowClear = true;
-                    for (int j = 0; j < blockGrid.GetLength(1); j++)
+                    if (blockGrid[i, j].getBlockType().getBlockTypeName().Equals("null"))
                     {
-                        if (blockGrid[i, j] is NullBlock)
-                        {
-                            rowClear = false;
-                            break;
-                        }
+                        rowClear = false;
+                        break;
                     }
-                    if (rowClear)
+                }
+
+                if (rowClear)
+                {
+                    for (int j = 0; j < blockGrid.GetLength(1); j++) blockGrid[i, j] = new BlockContext(j, i, "null");
+
+                    for (int row = i; row >= 0; row--)
                     {
-                        for (int j = 0; j < blockGrid.GetLength(1); j++)
+                        for (int col = blockGrid.GetLength(1) - 1; col >= 0; col--)
                         {
-                            blockGrid[i, j] = new BlockContext(j, i, "null");
-                        }
-                        for (int row = i; row >= 0; row--)
-                        {
-                            for (int col = blockGrid.GetLength(1); col >= 0; col--)
+                            BlockIF block = blockGrid[row, col];
+
+                            if (!block.getBlockType().getBlockTypeName().Equals("null"))
                             {
-                                BlockIF block = blockGrid[row, col];
-                                if (!(block is NullBlock))
-                                {
-                                    int currentX = block.getGridLocationX();
-                                    int currentY = block.getGridLocationY();
-                                    blockGrid[currentY + 1, currentX] = block;
-                                    blockGrid[currentY, currentX] = new BlockContext(currentX, currentY, "null");
-                                    block.setGridLocationY(currentY + 1);
-                                }
+                                int currentX = block.getGridLocationX();
+                                int currentY = block.getGridLocationY();
+                                blockGrid[currentY + 1, currentX] = block;
+                                blockGrid[currentY, currentX] = new BlockContext(currentX, currentY, "null");
+                                block.setGridLocationY(currentY + 1);
                             }
                         }
-                        notifyObservers(Events.LineCleared);
                     }
+
+                    notifyObservers(Events.LineCleared);
                 }
             }
         }
 
         public void checkBoardStatus()
         {
-            lock (this)
+            for (int i = 0; i < blockGrid.GetLength(1); i++)
             {
-                for (int i = 0; i < blockGrid.GetLength(1); i++)
+                BlockIF block = blockGrid[0, i];
+                if (!block.getBlockType().getBlockTypeName().Equals("null") && 
+                    !shapeContainsBlock(block.getGridLocationX(), block.getGridLocationY()))
                 {
-                    BlockIF block = blockGrid[0, i];
-                    if (!(block is NullBlock))
-                    {
-                        notifyObservers(Events.TopOfScreen);
-                        break;
-                    }
+                    notifyObservers(Events.TopOfScreen);
+                    break;
                 }
             }
         }
@@ -272,13 +341,12 @@ namespace Tetrix.src.Components
         private bool shapeContainsBlock(int gridX, int gridY)
         {
             BlockIF[,] blocks = currentShape.getBlocks();
+
             foreach (BlockIF block in blocks)
             {
-                if (block.getGridLocationX() == gridX && block.getGridLocationY() == gridY)
-                {
-                    return true;
-                }
+                if (block.getGridLocationX() == gridX && block.getGridLocationY() == gridY) return true;
             }
+
             return false;
         }
 

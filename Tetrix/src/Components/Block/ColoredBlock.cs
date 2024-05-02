@@ -1,4 +1,5 @@
-﻿namespace Tetrix.src.Components.Block
+﻿
+namespace Tetrix.src.Components.Block
 {
     public class ColoredBlock : BlockTypeIF
     {
@@ -6,9 +7,16 @@
 
         public ColoredBlock(Color color) { this.color = color; }
 
-        public void draw()
+        public void draw(Graphics graphics, int x, int y, int height, int width)
         {
-            throw new NotImplementedException();
+            Rectangle rectangle = new Rectangle(x, y, width, height);
+            graphics.DrawRectangle(new Pen(color), rectangle);
+            graphics.FillRectangle(new SolidBrush(color), rectangle);
+        }
+
+        public string getBlockTypeName()
+        {
+            return color.Name.ToLower();
         }
     }
 }

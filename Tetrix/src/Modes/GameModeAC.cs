@@ -1,6 +1,4 @@
-﻿using Tetrix.src;
-
-namespace Tetrix.src.Modes
+﻿namespace Tetrix.src.Modes
 {
     public abstract class GameModeAC
     {

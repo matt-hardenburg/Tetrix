@@ -4,36 +4,29 @@ namespace Tetrix.src.Settings
 {
     public class GameSettings : ReadOnlyGameSettingsIF
     {
-        //Change to more uints?
-        //Change to double values?
-        private int minFallingSpeed;
-        private int maxFallingSpeed;
-        private int rampUp;
-        private int maxStackHeight;
+        private double minFallingSpeed;
+        private double maxFallingSpeed;
+        private double speedIncrement;
+        private double rampUp;
         private double pointMultiplier;
         private ShapeBuilderIF shapeBuilder;
 
         public GameSettings()
         {
-            minFallingSpeed = 5;
-            maxFallingSpeed = 1;
+            minFallingSpeed = 3;
+            maxFallingSpeed = 0.5;
+            speedIncrement = 0.5;
             rampUp = 30;
-            maxStackHeight = 10;
             pointMultiplier = 1;
             shapeBuilder = new ShapeBuilder();
         }
 
-        public int getMaxFallingSpeed()
+        public double getMaxFallingSpeed()
         {
             return maxFallingSpeed;
         }
 
-        public int getMaxStackHeight()
-        {
-            return maxStackHeight;
-        }
-
-        public int getMinFallingSpeed()
+        public double getMinFallingSpeed()
         {
             return minFallingSpeed;
         }
@@ -43,7 +36,7 @@ namespace Tetrix.src.Settings
             return pointMultiplier;
         }
 
-        public int getRampUp()
+        public double getRampUp()
         {
             return rampUp;
         }
@@ -53,22 +46,27 @@ namespace Tetrix.src.Settings
             return shapeBuilder;
         }
 
-        public void setMaxFallingSpeed(int maxFallingSpeed)
+        public double getSpeedIncrement()
+        {
+            return speedIncrement;
+        }
+
+        public void setSpeedIncrement(double speedIncrement)
+        {
+            this.speedIncrement = speedIncrement;
+        }
+
+        public void setMaxFallingSpeed(double maxFallingSpeed)
         {
             this.maxFallingSpeed = maxFallingSpeed;
         }
 
-        public void setMinFallingSpeed(int minFallingSpeed)
+        public void setMinFallingSpeed(double minFallingSpeed)
         {
             this.minFallingSpeed = minFallingSpeed;
         }
 
-        public void setMaxStackHeight(int maxStackHeight)
-        {
-            this.maxStackHeight = maxStackHeight;
-        }
-
-        public void setRampUp(int rampUp)
+        public void setRampUp(double rampUp)
         {
             this.rampUp = rampUp;
         }

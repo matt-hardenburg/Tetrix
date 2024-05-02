@@ -13,5 +13,10 @@
         {
             shutDownRequested = true;
         }
+
+        public static void resetShutDown()
+        {
+            shutDownRequested = false;
+        }
     }
 }

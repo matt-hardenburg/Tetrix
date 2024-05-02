@@ -2,7 +2,7 @@
 
 namespace Tetrix.src.Observer
 {
-    public class ObserverManager : ObservableIF
+    public class ObserverManager
     {
         private List<ObserverIF> observers = new List<ObserverIF>();
 
@@ -13,10 +13,7 @@ namespace Tetrix.src.Observer
 
         public void notifyObservers(Board.Events _event)
         {
-            foreach (ObserverIF observer in observers)
-            {
-                observer.notify(_event);
-            }
+            foreach (ObserverIF observer in observers)  observer.notify(_event);
         }
 
         public void removeObserver(ObserverIF observer)

@@ -1,32 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tetrix.src.Threads
+﻿namespace Tetrix.src.Threads
 {
     public class GraphicsThread : ThreadAC
     {
         private Game game;
+        Panel boardPanel;
+        Label gameOverLabel;
+        Button returnToMainMenuButton;
 
-        public GraphicsThread(Game game)
+        public GraphicsThread(Game game, Panel boardPanel, Label gameOverLabel, Button returnToMainMenuButton)
         {
             this.game = game;
+            this.boardPanel = boardPanel;
+            this.gameOverLabel = gameOverLabel;
+            this.returnToMainMenuButton = returnToMainMenuButton;
         }
 
         protected override void doJob()
         {
-            Thread.Sleep(250);
             game.draw();
         }
 
-        //Finish this
         protected override void shutDown()
         {
+            if (boardPanel.InvokeRequired)
+                boardPanel.Invoke((MethodInvoker) (() => { boardPanel.Visible = false; }));
+
+            if (gameOverLabel.InvokeRequired)
+                gameOverLabel.Invoke((MethodInvoker)(() => { gameOverLabel.Visible = true; }));
+
+            if (returnToMainMenuButton.InvokeRequired)
+                returnToMainMenuButton.Invoke((MethodInvoker)(() => { returnToMainMenuButton.Visible = true; }));
+
             base.shutDown();
-            //Display panel with score
-            //Return to main menu
         }
     }
 }
