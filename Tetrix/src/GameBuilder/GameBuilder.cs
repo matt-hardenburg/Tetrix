@@ -1,7 +1,7 @@
 ﻿using Tetrix.src.Components;
 using Tetrix.src.Observer;
 
-namespace Tetrix.src
+namespace Tetrix.src.Director
 {
     public class GameBuilder
     {
@@ -30,7 +30,7 @@ namespace Tetrix.src
             game.getGameComponents().Add(new Components.Timer(timervalueLabel));
         }
 
-        public void addGame(Director.GameDirectorAC gameDirector, string gameMode)
+        public void addGame(GameDirectorAC gameDirector, string gameMode)
         {
             game.getGameComponents().Add(gameDirector.build(gameMode));
         }
