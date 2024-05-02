@@ -96,7 +96,7 @@ namespace Tetrix
             else currentMode = changeModeBox.SelectedItem.ToString();
             game = gameDirector.build(currentMode);
 
-            inputThreads = game.start(currentHighScores, scoreValueLabel, boardPanel, gameOverLabel, returnToMainMenuButton);
+            inputThreads = game.start(currentHighScores, boardPanel, gameOverLabel, returnToMainMenuButton);
 
             mainMenuPanel.Visible = false;
             highScorePanel.Visible = false;

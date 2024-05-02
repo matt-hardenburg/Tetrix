@@ -5,6 +5,7 @@ using Tetrix.src.Settings;
 using Tetrix.src.Observer;
 using Tetrix.src.Threads;
 using System.ComponentModel;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace Tetrix.src
 {
@@ -37,7 +38,7 @@ namespace Tetrix.src
             threads = new List<Thread>();
         }
 
-        public List<InputThread> start(uint[] highScores, Label scoreValueLabel, Panel boardPanel, Label gameOverLabel, Button returnButton )
+        public List<InputThread> start(uint[] highScores, Panel boardPanel, Label gameOverLabel, Button returnButton )
         {
             Terminator.resetShutDown();
             List<InputThread> inputThreads = new List<InputThread>();
@@ -51,10 +52,15 @@ namespace Tetrix.src
                     iThread.Name = "Input";
                     threads.Add(iThread);
                     inputThreads.Add(inputThread);
-
-                    thread = new Thread(new ThreadStart(new GameThread(getGameSettings(), (Board)gameComponent, highScores, scoreValueLabel).run));
-                    thread.Name = "Game";
-                    threads.Add(thread);
+                    foreach (GameElementIF scoreComponent  in gameComponents)
+                    {
+                        if (scoreComponent is Score)
+                        {
+                            thread = new Thread(new ThreadStart(new GameThread(getGameSettings(), (Board)gameComponent, highScores, (Score) scoreComponent).run));
+                            thread.Name = "Game";
+                            threads.Add(thread);
+                        }
+                    }
 
                     getGameSettings().getShapeBuilder().generateShape();
                     ((Board)gameComponent).addShapeToBoard(getGameSettings().getShapeBuilder().getShape());

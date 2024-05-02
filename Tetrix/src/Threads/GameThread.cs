@@ -11,15 +11,15 @@ namespace Tetrix.src.Threads
         private double speedIncrement;
         private int rampUpCounter;
         private uint[] highScores;
-        private Label scoreLabelValue;
+        private Score score;
         private bool updatedScores;
 
-        public GameThread(ReadOnlyGameSettingsIF gameSettings, Board board, uint[] highScores, Label scoreValueLabel)
+        public GameThread(ReadOnlyGameSettingsIF gameSettings, Board board, uint[] highScores, Score score)
         {
             this.gameSettings = gameSettings;
             this.board = board;
             this.highScores = highScores;
-            this.scoreLabelValue = scoreValueLabel;
+            this.score = score;
             updatedScores = false;
             currentFallingSpeed = gameSettings.getMinFallingSpeed();
             speedIncrement = gameSettings.getSpeedIncrement();
@@ -43,11 +43,7 @@ namespace Tetrix.src.Threads
 
         protected override void shutDown()
         {
-            uint newScore = 0;
-            if (scoreLabelValue.InvokeRequired)
-            {
-                scoreLabelValue.Invoke((MethodInvoker)(() => { newScore = uint.Parse(scoreLabelValue.Text); }));
-            }
+            uint newScore = score.getCurrentScore(); ;
 
             for (int i = 0; i < highScores.Length; i++)
             {
