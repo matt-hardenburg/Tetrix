@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace Tetrix.src.Components.Block
+﻿namespace Tetrix.src.Components.Block
 {
     public class NullBlock : BlockTypeIF
     {

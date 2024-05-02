@@ -41,9 +41,11 @@ namespace Tetrix.src.Components.Shape
             int row = rand.Next(0, 4);
             int col = rand.Next(0, 2);
             List<Point> options = new List<Point>();
+
             for (int num = 1; num <= numOfBlocks; num++)
             {
                 blocks[row, col] = new BlockContext(col, row, color);
+
                 if (row - 1 >= 0 && blocks[row - 1, col].getBlockType().getBlockTypeName().Equals("null"))
                     options.Add(new Point(col, row - 1));
                 if (row + 1 < blocks.GetLength(0) && blocks[row + 1, col].getBlockType().getBlockTypeName().Equals("null"))
@@ -53,9 +55,7 @@ namespace Tetrix.src.Components.Shape
                 if (col + 1 < blocks.GetLength(1) && blocks[row, col + 1].getBlockType().getBlockTypeName().Equals("null"))
                     options.Add(new Point(col + 1, row));
                 if (options.Count <= 0)
-                {
                     break;
-                }
                 else
                 {
                     int selection = rand.Next(0, options.Count);

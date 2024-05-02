@@ -17,15 +17,19 @@ namespace Tetrix.src.Components.Shape
             int numOfBlocks = rand.Next(1, 9);
             int row;
             int col;
+
             for (int num = 1; num <= numOfBlocks; num++)
             {
                 do
                 {
                     row = rand.Next(0, 4);
                     col = rand.Next(0, 2);
-                } while (!blocks[row, col].getBlockType().getBlockTypeName().Equals("null"));
+                } 
+                while (!blocks[row, col].getBlockType().getBlockTypeName().Equals("null"));
+
                 blocks[row, col] = new BlockContext(col, row, color);
             }
+
             return blocks;
         }
     }

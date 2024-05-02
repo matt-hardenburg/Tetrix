@@ -13,10 +13,7 @@ namespace Tetrix.src.Observer
 
         public void notifyObservers(Board.Events _event)
         {
-            foreach (ObserverIF observer in observers)
-            {
-                observer.notify(_event);
-            }
+            foreach (ObserverIF observer in observers)  observer.notify(_event);
         }
 
         public void removeObserver(ObserverIF observer)

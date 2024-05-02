@@ -1,6 +1,4 @@
-﻿using Tetrix.src.Threads;
-
-namespace Tetrix.src.Components
+﻿namespace Tetrix.src.Components
 {
     public class Timer : GameElementIF
     {

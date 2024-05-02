@@ -4,8 +4,6 @@ using Tetrix.src.Modes;
 using Tetrix.src.Settings;
 using Tetrix.src.Observer;
 using Tetrix.src.Threads;
-using System.ComponentModel;
-using static System.Formats.Asn1.AsnWriter;
 
 namespace Tetrix.src
 {
@@ -16,23 +14,15 @@ namespace Tetrix.src
         private ReadOnlyGameSettingsIF gameSettings;
         private List<Thread> threads;
 
-        //Lots of casting between game components, should eliminate
-
         public Game(string gameMode)
         {
             Type type = Type.GetType("Tetrix.src.Modes." + gameMode + "GameMode");
             object obj = Activator.CreateInstance(type, this);
-            if (obj != null && obj is GameModeAC)
-            {
-                this.gameMode = (GameModeAC) obj;
-            }
-            else
-            {
-                this.gameMode = new NormalGameMode(this);
-            }
 
-            gameComponents = new List<GameElementIF>();
-            gameComponents.Add(this);
+            if (obj != null && obj is GameModeAC) this.gameMode = (GameModeAC) obj;
+            else this.gameMode = new NormalGameMode(this);
+
+            gameComponents = [this];
             gameSettings = new GameSettings();
             this.gameMode.setMode();
             threads = new List<Thread>();
@@ -54,9 +44,9 @@ namespace Tetrix.src
                     inputThreads.Add(inputThread);
                     foreach (GameElementIF scoreComponent  in gameComponents)
                     {
-                        if (scoreComponent is Score)
+                        if (scoreComponent is Score score)
                         {
-                            thread = new Thread(new ThreadStart(new GameThread(getGameSettings(), (Board)gameComponent, highScores, (Score) scoreComponent).run));
+                            thread = new Thread(new ThreadStart(new GameThread(getGameSettings(), (Board)gameComponent, highScores, score).run));
                             thread.Name = "Game";
                             threads.Add(thread);
                         }
@@ -65,15 +55,15 @@ namespace Tetrix.src
                     getGameSettings().getShapeBuilder().generateShape();
                     ((Board)gameComponent).addShapeToBoard(getGameSettings().getShapeBuilder().getShape());
                 }
-                else if (gameComponent is Components.Timer)
+                else if (gameComponent is Components.Timer timer)
                 {
-                    thread = new Thread(new ThreadStart(new TimerThread((Components.Timer)gameComponent).run));
+                    thread = new Thread(new ThreadStart(new TimerThread(timer).run));
                     thread.Name = "Timer";
                     threads.Add(thread);
                 }
-                else if (gameComponent is Game)
+                else if (gameComponent is Game game)
                 {
-                    thread = new Thread(new ThreadStart(new GraphicsThread((Game)gameComponent, boardPanel, gameOverLabel, returnButton).run));
+                    thread = new Thread(new ThreadStart(new GraphicsThread(game, boardPanel, gameOverLabel, returnButton).run));
                     thread.Name = "Graphics";
                     threads.Add(thread);
                 }
@@ -87,7 +77,6 @@ namespace Tetrix.src
         public void exit()
         {
             Terminator.doShutDown();
-            //foreach (Thread thread in threads) thread.Join();
         }
 
         public void draw()
@@ -115,11 +104,11 @@ namespace Tetrix.src
                 case Board.Events.PieceStopped:
                     foreach (GameElementIF element in gameComponents)
                     {
-                        if (element is Board)
+                        if (element is Board board)
                         {
                             ShapeBuilderIF shapeBuilder = gameSettings.getShapeBuilder();
                             shapeBuilder.generateShape();
-                            ((Board)element).addShapeToBoard(shapeBuilder.getShape());
+                            board.addShapeToBoard(shapeBuilder.getShape());
                         }
                     }
                     break;

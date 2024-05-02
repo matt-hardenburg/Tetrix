@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Eventing.Reader;
-using Tetrix.src.Components.Block;
+﻿using Tetrix.src.Components.Block;
 
 namespace Tetrix.src.Components.Shape
 {
@@ -36,6 +35,7 @@ namespace Tetrix.src.Components.Shape
             int targetX = currentColumnNumber / 2;
             int targetY = currentRowNumber / 2;
             bool firstBlock = true;
+
             for (int i = 0; i < currentRowNumber; i++)
             {
                 for (int j = 0; j < currentColumnNumber; j++)
@@ -54,8 +54,10 @@ namespace Tetrix.src.Components.Shape
                     }
                 }
             }
+
             gridOffsetX = offsetBlock.getGridLocationX();
             gridOffsetY = offsetBlock.getGridLocationY();
+
             for (int i = 0; i < currentColumnNumber; i++)
             {
                 newColCnt = 0;
@@ -63,13 +65,14 @@ namespace Tetrix.src.Components.Shape
                 {
                    BlockIF oldBlock = blocks[j, i];
                    newBlocks[newRowCnt, newColCnt] = new BlockContext(oldBlock.getGridLocationX(), oldBlock.getGridLocationY(), oldBlock.getBlockType().getBlockTypeName());
+
                    if (!blocks[j, i].getBlockType().getBlockTypeName().Equals("null"))
-                    {
+                   {
                         int offsetX = blocks[j, i].getGridLocationX() - gridOffsetX;
                         int offsetY = blocks[j, i].getGridLocationY() - gridOffsetY;
                         newBlocks[newRowCnt, newColCnt].setGridLocationX(gridOffsetX - offsetY);
                         newBlocks[newRowCnt, newColCnt].setGridLocationY(gridOffsetY + offsetX);
-                    }
+                   }
 
                     newColCnt++;
                 }

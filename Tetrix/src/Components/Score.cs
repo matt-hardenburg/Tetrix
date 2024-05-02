@@ -1,6 +1,5 @@
 ﻿using Tetrix.src.Settings;
 using Tetrix.src.Observer;
-using Tetrix.src.Threads;
 
 namespace Tetrix.src.Components
 {
@@ -20,9 +19,7 @@ namespace Tetrix.src.Components
         public void draw()
         {
             if (scoreValueLabel.InvokeRequired)
-            {
                 scoreValueLabel.Invoke((MethodInvoker)(() => { scoreValueLabel.Text = currentScore.ToString(); }));
-            }
         }
 
         public uint getCurrentScore()

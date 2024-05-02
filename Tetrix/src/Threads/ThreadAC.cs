@@ -4,16 +4,13 @@
     {
         public void run()
         {
-            while (!Terminator.isShutDownRequested())
-            {
-                doJob();
-            }
+            while (!Terminator.isShutDownRequested()) doJob();
             shutDown();
         }
 
         protected virtual void shutDown()
         {
-
+            //override as needed
         }
 
         protected abstract void doJob();

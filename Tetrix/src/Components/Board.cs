@@ -58,9 +58,10 @@ namespace Tetrix.src.Components
                 int firstY = 0;
                 int offsetX = 0;
                 int offsetY = 0;
+
                 foreach (BlockIF block in currentShape.getBlocks())
                 {
-                    if (!(block.getBlockType().getBlockTypeName().Equals("null")))
+                    if (!block.getBlockType().getBlockTypeName().Equals("null"))
                     {
                         if (firstBlock)
                         {
@@ -68,10 +69,12 @@ namespace Tetrix.src.Components
                             firstY = block.getGridLocationY();
                             firstBlock = false;
                         }
+
                         offsetX = block.getGridLocationX() - firstX;
                         offsetY = block.getGridLocationY() - firstY;
                         int gridX = (blockGrid.GetLength(1) / 2) + offsetX;
                         int gridY = offsetY;
+
                         if (blockGrid[gridY, gridX].getBlockType().getBlockTypeName().Equals("null"))
                         {
                             block.setGridLocationX(gridX);
@@ -107,7 +110,9 @@ namespace Tetrix.src.Components
                             {
                                 int currentX = block.getGridLocationX();
                                 int currentY = block.getGridLocationY();
-                                if (!(currentY < blockGrid.GetLength(0) - 1 && (blockGrid[currentY + 1, currentX].getBlockType().getBlockTypeName().Equals("null") || shapeContainsBlock(currentX, currentY + 1))))
+                                if (!(currentY < blockGrid.GetLength(0) - 1 && 
+                                    (blockGrid[currentY + 1, currentX].getBlockType().getBlockTypeName().Equals("null") || 
+                                    shapeContainsBlock(currentX, currentY + 1))))
                                 {
                                     moveTrue = false;
                                     break;
@@ -134,10 +139,7 @@ namespace Tetrix.src.Components
                             }
                         }
                     }
-                    else
-                    {
-                        notifyObservers(Events.PieceStopped);
-                    }
+                    else notifyObservers(Events.PieceStopped);
                 }
                 else if (direction.Equals("left"))
                 {
@@ -151,7 +153,9 @@ namespace Tetrix.src.Components
                             {
                                 int currentX = block.getGridLocationX();
                                 int currentY = block.getGridLocationY();
-                                if (!(currentX > 0 && (blockGrid[currentY, currentX - 1].getBlockType().getBlockTypeName().Equals("null") || shapeContainsBlock(currentX - 1, currentY))))
+                                if (!(currentX > 0 && 
+                                    (blockGrid[currentY, currentX - 1].getBlockType().getBlockTypeName().Equals("null") || 
+                                    shapeContainsBlock(currentX - 1, currentY))))
                                 {
                                     moveTrue = false;
                                     break;
@@ -191,7 +195,9 @@ namespace Tetrix.src.Components
                             {
                                 int currentX = block.getGridLocationX();
                                 int currentY = block.getGridLocationY();
-                                if (!(currentX < blockGrid.GetLength(1) - 1 && (blockGrid[currentY, currentX + 1].getBlockType().getBlockTypeName().Equals("null") || shapeContainsBlock(currentX + 1, currentY))))
+                                if (!(currentX < blockGrid.GetLength(1) - 1 && 
+                                    (blockGrid[currentY, currentX + 1].getBlockType().getBlockTypeName().Equals("null") || 
+                                    shapeContainsBlock(currentX + 1, currentY))))
                                 {
                                     moveTrue = false;
                                     break;
@@ -219,6 +225,7 @@ namespace Tetrix.src.Components
                         }
                     }
                 }
+
                 clearedFilledLines();
                 checkBoardStatus();
             }
@@ -230,13 +237,16 @@ namespace Tetrix.src.Components
             {
                 bool moveTrue = true;
                 BlockIF[,] rotatedBlocks = currentShape.getRotatedBlocks();
+
                 foreach (BlockIF block in rotatedBlocks)
                 {
                     if (!block.getBlockType().getBlockTypeName().Equals("null"))
                     {
                         int currentX = block.getGridLocationX();
                         int currentY = block.getGridLocationY();
-                        if (currentX < 0 || currentX >= blockGrid.GetLength(1) || currentY < 0 || currentY >= blockGrid.GetLength(0) || !(blockGrid[currentY, currentX].getBlockType().getBlockTypeName().Equals("null") || shapeContainsBlock(currentX, currentY)))
+
+                        if (currentX < 0 || currentX >= blockGrid.GetLength(1) || currentY < 0 || currentY >= blockGrid.GetLength(0) || 
+                            !(blockGrid[currentY, currentX].getBlockType().getBlockTypeName().Equals("null") || shapeContainsBlock(currentX, currentY)))
                         {
                             moveTrue = false;
                             break;
@@ -255,7 +265,9 @@ namespace Tetrix.src.Components
                             blockGrid[currentY, currentX] = new BlockContext(currentX, currentY, "null");
                         }
                     }
+
                     currentShape.setBlocks(rotatedBlocks);
+
                     foreach (BlockIF block in currentShape.getBlocks())
                     {
                         if (!block.getBlockType().getBlockTypeName().Equals("null"))
@@ -266,6 +278,7 @@ namespace Tetrix.src.Components
                         }
                     }
                 }
+
                 clearedFilledLines();
                 checkBoardStatus();
             }
@@ -284,17 +297,17 @@ namespace Tetrix.src.Components
                         break;
                     }
                 }
+
                 if (rowClear)
                 {
-                    for (int j = 0; j < blockGrid.GetLength(1); j++)
-                    {
-                        blockGrid[i, j] = new BlockContext(j, i, "null");
-                    }
+                    for (int j = 0; j < blockGrid.GetLength(1); j++) blockGrid[i, j] = new BlockContext(j, i, "null");
+
                     for (int row = i; row >= 0; row--)
                     {
                         for (int col = blockGrid.GetLength(1) - 1; col >= 0; col--)
                         {
                             BlockIF block = blockGrid[row, col];
+
                             if (!block.getBlockType().getBlockTypeName().Equals("null"))
                             {
                                 int currentX = block.getGridLocationX();
@@ -305,6 +318,7 @@ namespace Tetrix.src.Components
                             }
                         }
                     }
+
                     notifyObservers(Events.LineCleared);
                 }
             }
@@ -315,7 +329,8 @@ namespace Tetrix.src.Components
             for (int i = 0; i < blockGrid.GetLength(1); i++)
             {
                 BlockIF block = blockGrid[0, i];
-                if (!block.getBlockType().getBlockTypeName().Equals("null") && !shapeContainsBlock(block.getGridLocationX(), block.getGridLocationY()))
+                if (!block.getBlockType().getBlockTypeName().Equals("null") && 
+                    !shapeContainsBlock(block.getGridLocationX(), block.getGridLocationY()))
                 {
                     notifyObservers(Events.TopOfScreen);
                     break;
@@ -326,13 +341,12 @@ namespace Tetrix.src.Components
         private bool shapeContainsBlock(int gridX, int gridY)
         {
             BlockIF[,] blocks = currentShape.getBlocks();
+
             foreach (BlockIF block in blocks)
             {
-                if (block.getGridLocationX() == gridX && block.getGridLocationY() == gridY)
-                {
-                    return true;
-                }
+                if (block.getGridLocationX() == gridX && block.getGridLocationY() == gridY) return true;
             }
+
             return false;
         }
 

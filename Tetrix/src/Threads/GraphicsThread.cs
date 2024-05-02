@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace Tetrix.src.Threads
+﻿namespace Tetrix.src.Threads
 {
     public class GraphicsThread : ThreadAC
     {
@@ -25,17 +23,14 @@ namespace Tetrix.src.Threads
         protected override void shutDown()
         {
             if (boardPanel.InvokeRequired)
-            {
                 boardPanel.Invoke((MethodInvoker) (() => { boardPanel.Visible = false; }));
-            }
+
             if (gameOverLabel.InvokeRequired)
-            {
                 gameOverLabel.Invoke((MethodInvoker)(() => { gameOverLabel.Visible = true; }));
-            }
+
             if (returnToMainMenuButton.InvokeRequired)
-            {
                 returnToMainMenuButton.Invoke((MethodInvoker)(() => { returnToMainMenuButton.Visible = true; }));
-            }
+
             base.shutDown();
         }
     }

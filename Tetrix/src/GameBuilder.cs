@@ -7,10 +7,7 @@ namespace Tetrix.src
     {
         private Game game;
 
-        public Game getGame()
-        {
-            return game;
-        }
+        public Game getGame() { return game; }
 
         public void addBoard(int gridHeight, int gridWidth, Panel boardPanel)
         {
