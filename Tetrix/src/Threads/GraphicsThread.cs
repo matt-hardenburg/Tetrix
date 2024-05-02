@@ -19,7 +19,6 @@ namespace Tetrix.src.Threads
 
         protected override void doJob()
         {
-            //Thread.Sleep(50);
             game.draw();
         }
 

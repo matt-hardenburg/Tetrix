@@ -44,9 +44,7 @@ namespace Tetrix
 
             gameDirector = new NormalGameDirector(scoreValueLabel, timerValueLabel, boardPanel);
         }
-        //Add display exit function
-        //Windows forms exit button
-        //Keep join
+
         public List<Thread> getThreads()
         {
             return threads;
@@ -59,7 +57,7 @@ namespace Tetrix
 
         private void highScoreBtn_Click(object sender, EventArgs e)
         {
-            highScoresRetreived = parseHighScores("Data\\highscores.txt"); //ensure latest information
+            highScoresRetreived = parseHighScores("Data\\highscores.txt");
 
             this.SuspendLayout();
             mainMenuPanel.Visible = false;

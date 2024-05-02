@@ -41,17 +41,14 @@ namespace Tetrix.src.Threads
             }
         }
 
-        //Should work, but is untested 
         protected override void shutDown()
         {
-            //get score from label
             uint newScore = 0;
             if (scoreLabelValue.InvokeRequired)
             {
                 scoreLabelValue.Invoke((MethodInvoker)(() => { newScore = uint.Parse(scoreLabelValue.Text); }));
             }
 
-            //cascading add if greater than existing
             for (int i = 0; i < highScores.Length; i++)
             {
                 if (newScore > highScores[i])
@@ -62,18 +59,18 @@ namespace Tetrix.src.Threads
                     newScore = temp;
                 }
             }
-            //write to file and continue shutdown
+
             writeToFile("Data\\highscores.txt");
             base.shutDown();
         }
 
         private void writeToFile(string path)
         {
-            if (!updatedScores) return; //no need to update file
+            if (!updatedScores) return;
 
             try
             {
-                StreamWriter scoreWriter = new("Data\\highscores.txt", false);
+                StreamWriter scoreWriter = new(path, false);
                 for (int i = 0; i < highScores.Length; i++) scoreWriter.WriteLine(highScores[i].ToString());
                 scoreWriter.Close();
             }
