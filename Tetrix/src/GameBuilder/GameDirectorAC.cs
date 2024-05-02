@@ -1,6 +1,4 @@
-﻿using Tetrix.src;
-
-namespace Tetrix.src.Director
+﻿namespace Tetrix.src.Director
 {
     public abstract class GameDirectorAC
     {
