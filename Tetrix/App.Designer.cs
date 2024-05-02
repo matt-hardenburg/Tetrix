@@ -129,8 +129,8 @@
             titleLabel.AutoSize = true;
             titleLabel.BackColor = Color.Black;
             titleLabel.Font = new Font("OCR A Extended", 19.8000011F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            titleLabel.ForeColor = Color.Cyan;
-            titleLabel.Location = new Point(248, 35);
+            titleLabel.ForeColor = Color.Yellow;
+            titleLabel.Location = new Point(241, 35);
             titleLabel.Name = "titleLabel";
             titleLabel.Size = new Size(141, 35);
             titleLabel.TabIndex = 0;
@@ -346,7 +346,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = SystemColors.ButtonShadow;
+            BackColor = SystemColors.ControlDarkDark;
             ClientSize = new Size(798, 440);
             Controls.Add(mainMenuPanel);
             Controls.Add(highScorePanel);
